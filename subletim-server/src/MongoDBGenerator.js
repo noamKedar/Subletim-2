@@ -92,4 +92,3 @@ const sublet3 = new SubletModel({_id : new ObjectID, subletName: "Best sublet", 
 const subletsArr = [sublet1, sublet2, sublet3]
 insertToDB("subletimCollection", "subletim", subletsArr);
 
-Console.log("Done!")
