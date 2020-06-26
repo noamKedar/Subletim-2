@@ -1,16 +1,34 @@
-<form class="well" (submit)="addSublet($event)">
-  <div class="form-group">
-    <input type="text" [(ngModel)]="subletName" name="title" class="form-control" placeholder="Add Task...">
-  </div>
-</form>
-<div class="task-list">
-  <div *ngFor="let sublet of sublets">
-    <div class="col-md-7">
+<div *ngIf="!createOrEdit" class="title">Sublets List</div>
+<input *ngIf="!createOrEdit" type="button" (click)="addNewSublet()" value="Add New Sublet" class="btn btn-danger button new-button">
+<table *ngIf="!createOrEdit">
+  <tr>
+    <th>Name</th>
+    <th>Start Date</th>
+    <th>End Date</th>
+    <th>Price</th>
+    <th>Apartment</th>
+  </tr>
+  <tr *ngFor="let sublet of sublets">
+    <td>
       {{sublet.subletName}}
-    </div>
-    <div class="col-md-4">
-      <input type="button" (click)="deleteTask(sublet._id)" value="Delete" class="btn btn-danger">
-    </div>
-    <br><br>
-  </div>
-</div>
+    </td>
+    <td>
+      {{sublet.startDate}}
+    </td>
+    <td>
+      {{sublet.endDate}}
+    </td>
+    <td>
+      {{sublet.price}}
+    </td>
+    <td>
+      {{sublet.apartment}}
+    </td>
+    <td>
+      <img src="../../assets/pencil.svg" (click)="editSublet(sublet)" class="icon">
+      <img src="../../assets/trash.svg" (click)="deleteSublet(sublet._id)" class="icon">
+    </td>
+  </tr>
+</table>
+
+<add-sublet *ngIf="createOrEdit" [createOrEdit]="createOrEdit" [subletToEdit]="subletToEdit" (createOrEditChange)="finishedAddingOrCreate()"></add-sublet>

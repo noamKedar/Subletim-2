@@ -1,6 +1,7 @@
 import {Injectable} from "@angular/core";
 import {Http, Headers} from '@angular/http';
 import 'rxjs/add/operator/map';
+import {parseTsconfigFile} from "@angular/core/schematics/utils/typescript/parse_tsconfig";
 
 @Injectable({
   providedIn: 'root',
@@ -8,7 +9,6 @@ import 'rxjs/add/operator/map';
 export class SubletService{
   // @ts-ignore
   constructor(private http:Http) {
-    console.log('Sublet Service Initialized...');
   }
 
   getSublets() {
@@ -17,7 +17,7 @@ export class SubletService{
   }
 
   addSublet(newTask) {
-    var headers = new Headers();
+    const headers = new Headers();
     headers.append('Content-Type', 'application/json');
     return this.http.post('subletRoute/sublet', JSON.stringify(newTask), {headers: headers})
       .map(res => res.json());
@@ -29,7 +29,7 @@ export class SubletService{
   }
 
   updateSublet(sublet) {
-    var headers = new Headers();
+    const headers = new Headers();
     headers.append('Content-Type', 'application/json');
     return this.http.put('subletRoute/sublet/'+sublet._id, JSON.stringify(sublet), {headers: headers})
       .map(res => res.json());

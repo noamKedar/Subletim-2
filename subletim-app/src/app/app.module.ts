@@ -6,12 +6,15 @@ import {SubletsComponent} from "./components/sublet.component";
 import {FormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
 import {HttpModule} from "@angular/http";
+import {AddSubletComponent} from "./components/addSubletComponent/addSublet.component";
 import {ApartmentComponents} from "./components/apartment.components";
 import {UserComponent} from "./components/user.components";
 
 @NgModule({
   declarations: [
     AppComponent,
+    SubletsComponent,
+    AddSubletComponent,
     SubletsComponent,
     ApartmentComponents,
     UserComponent
@@ -23,6 +26,6 @@ import {UserComponent} from "./components/user.components";
     HttpModule,
   ],
   providers: [],
-  bootstrap: [AppComponent, SubletsComponent]
+  bootstrap: [AppComponent, SubletsComponent, AddSubletComponent]
 })
 export class AppModule { }
