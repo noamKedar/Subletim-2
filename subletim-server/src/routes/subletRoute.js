@@ -59,11 +59,12 @@ router.put('/sublet/:id', function(req, res, next) {
             "error":"Bad Data"
         });
     } else {
-        db.subletimCollection.update({_id: mongojs.ObjectId(req.params.id)}, sublet, {}, function(err, task){
+        delete sublet._id;
+        db.subletimCollection.replaceOne({_id: mongojs.ObjectId(req.params.id)}, sublet, {}, function(err, sublet){
             if(err){
                 res.send(err);
             }
-            res.json(task);
+            res.json(sublet);
         });
     }
 });
