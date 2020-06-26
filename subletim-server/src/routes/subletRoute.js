@@ -6,7 +6,6 @@ var db = mongojs('subletimDB', ['subletimCollection']); //local mongo installati
 
 // Get All Tasks
 router.get('/sublets', function(req, res, next) {
-    print('got here');
     db.subletimCollection.find(function(err, tasks){
         if(err) {
             res.send(err);
