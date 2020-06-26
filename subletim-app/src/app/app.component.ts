@@ -7,4 +7,8 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'subletim-app';
+  constructor() {
+    console.log('got here2');
+  }
+
 }

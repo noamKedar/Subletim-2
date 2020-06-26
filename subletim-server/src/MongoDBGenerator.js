@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-ObjectID = require('mongodb').ObjectID
+ObjectID = require('mongodb').ObjectID;
 
 
 const user = new mongoose.Schema({
@@ -79,7 +79,7 @@ const apartment3 = new ApartmentModel({_id : new ObjectID, apartmentName: "Beaut
     owner: user3._id, roomNumber: 5
 });
 
-const apartmentsArr = [apartment1, apartment2, apartment3]
+const apartmentsArr = [apartment1, apartment2, apartment3];
 insertToDB("apartmentsCollection", "apartments", apartmentsArr);
 
 const sublet1 = new SubletModel({_id : new ObjectID, subletName: "Best sublet", startDate: Date("10/09/2020"),

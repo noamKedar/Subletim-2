@@ -1,0 +1,16 @@
+<form class="well" (submit)="addSublet($event)">
+  <div class="form-group">
+    <input type="text" [(ngModel)]="subletName" name="title" class="form-control" placeholder="Add Task...">
+  </div>
+</form>
+<div class="task-list">
+  <div *ngFor="let sublet of sublets">
+    <div class="col-md-7">
+      {{sublet.subletName}}
+    </div>
+    <div class="col-md-4">
+      <input type="button" (click)="deleteTask(sublet._id)" value="Delete" class="btn btn-danger">
+    </div>
+    <br><br>
+  </div>
+</div>
