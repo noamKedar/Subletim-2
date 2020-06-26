@@ -8,7 +8,8 @@ const user = new mongoose.Schema({
     lastName: String,
     email: String,
     userName: String,
-    phoneNumber: String
+    phoneNumber: String,
+    password: String
 });
 module.exports = user;
 
