@@ -1,6 +1,6 @@
 // import user
 export class Apartment{
-  id: object;
+  _id: object;
   address: string;
   apartmentName: string;
   city: string;

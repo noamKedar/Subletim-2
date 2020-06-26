@@ -8,23 +8,23 @@ export class ApartmentService{
     console.log('Apartment Service Initialized...');
   }
   getApartments(){
-    return this.http.get('/api/apartments')
+    return this.http.get('/apartmentRoute/apartments')
       .map(res => res.json());
   }
   addApartment(newApartment){
     var headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    return this.http.post('/api/apartment', JSON.stringify(newApartment), {headers: headers})
+    return this.http.post('/apartmentRoute/apartment', JSON.stringify(newApartment), {headers: headers})
       .map(res => res.json());
   }
   deleteApartment(id){
-    return this.http.delete('/api/apartment/'+id)
+    return this.http.delete('/apartmentRoute/apartment/'+id)
       .map(res => res.json());
   }
   updateApartment(apartment){
     var headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    return this.http.put('/api/apartment/'+apartment._id, JSON.stringify(apartment), {headers: headers})
+    return this.http.put('/apartmentRoute/apartment/'+apartment._id, JSON.stringify(apartment), {headers: headers})
       .map(res => res.json());
   }
 }
