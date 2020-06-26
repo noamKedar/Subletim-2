@@ -6,7 +6,7 @@ import {Apartment} from './apartment'
 
 @Component({
   selector: 'apartment',
-  templateUrl: 'apartment.component.html'
+  templateUrl: 'apartment.components.html'
 })
 
 export class ApartmentComponents {
@@ -47,7 +47,7 @@ export class ApartmentComponents {
       .subscribe(data => {
         if (data.n == 1) {
           for (var i = 0; i < apartments.length; i++) {
-            if (apartments[i].id == id) {
+            if (apartments[i]._id == id) {
               apartments.splice(i, 1);
             }
           }

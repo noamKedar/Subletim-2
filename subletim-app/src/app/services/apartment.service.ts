@@ -2,7 +2,9 @@ import{Injectable} from '@angular/core';
 import {Http, Headers} from '@angular/http';
 import 'rxjs/add/operator/map';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class ApartmentService{
   constructor(private http:Http){
     console.log('Apartment Service Initialized...');
