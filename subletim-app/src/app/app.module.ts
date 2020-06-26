@@ -6,11 +6,13 @@ import {SubletsComponent} from "./components/sublet.component";
 import {FormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
 import {HttpModule} from "@angular/http";
+import {ApartmentComponents} from "./components/apartment.components";
 
 @NgModule({
   declarations: [
     AppComponent,
-    SubletsComponent
+    SubletsComponent,
+    ApartmentComponents
   ],
   imports: [
     BrowserModule,

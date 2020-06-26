@@ -1,0 +1,16 @@
+<form class="well" (submit)="addApartment($event)">
+  <div class="form-group">
+    <input type="text" [(ngModel)]="apartmentName" name="apartmentName" class="form-control" placeholder="Add Apartment...">
+  </div>
+</form>
+<div class="apartment-list">
+  <div *ngFor="let apartment of apartments">
+    <div class="col-md-7">
+      {{apartment.apartmentName}}
+    </div>
+    <div class="col-md-4">
+      <input type="button" (click)="deleteApartment(apartment._id)" value="Delete" class="btn btn-danger">
+    </div>
+    <br><br>
+  </div>
+</div>
