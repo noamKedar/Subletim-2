@@ -24,7 +24,7 @@ app.engine('html', require('ejs').renderFile);
 app.use(express.static(path.join(__dirname, '../subletim-app/dist/subletim-app')));
 
 app.use('/', indexRouter);
-app.use('/api', subletRouter);
+app.use('/subletRoute', subletRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
