@@ -1,0 +1,87 @@
+var express = require('express');
+var router = express.Router();
+var mongojs = require('mongojs');
+
+var db = mongojs('subletimDB', ['apartmentsCollection']);
+
+// Get All Apartments
+router.get('/apartments', function(req, res, next){
+    db.apartmentsCollection.find(function(err, apartments){
+        if(err){
+            res.send(err);
+        }
+        res.json(apartments);
+    });
+});
+
+// Get Single apartments
+router.get('/apartments/:id', function(req, res, next){
+    db.apartmentsCollection.findOne({_id: mongojs.ObjectId(req.params.id)}, function(err, apartment){
+        if(err){
+            res.send(err);
+        }
+        res.json(apartment);
+    });
+});
+
+//Save Apartment
+router.post('/apartment', function(req, res, next){
+        db.apartmentsCollection.save(apartment, function(err, apartment){
+            if(err){
+                res.send(err);
+            }
+            res.json(apartment);
+        });
+});
+
+// Delete Task
+router.delete('/apartment/:id', function(req, res, next){
+    db.apartmentsCollection.remove({_id: mongojs.ObjectId(req.params.id)}, function(err, apartment){
+        if(err){
+            res.send(err);
+        }
+        res.json(apartment);
+    });
+});
+
+// Update Apartment
+router.put('/apartment/:id', function(req, res, next){
+    var apartment = req.body;
+    var updApartment = {};
+
+    if(apartment.apartmentName){
+        updApartment.apartmentName = apartment.apartmentName;
+    }
+
+    if(apartment.city){
+        updApartment.city = apartment.city;
+    }
+
+    if(apartment.address){
+        updApartment.address = apartment.address;
+    }
+
+    if(apartment.owner){
+        updApartment.owner = apartment.owner;
+    }
+
+    if(apartment.roomNumber){
+        updApartment.roomNumber = apartment.roomNumber;
+    }
+
+    if(!updApartment){
+        res.status(400);
+        res.json({
+            "error":"Bad Data"
+        });
+    } else {
+        db.apartmentsCollection.update({_id: mongojs.ObjectId(req.params.id)},updApartment, {}, function(err, apartment){
+            if(err){
+                res.send(err);
+            }
+            res.json(apartment);
+        });
+    }
+});
+
+module.exports = router;
