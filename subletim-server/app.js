@@ -7,6 +7,7 @@ const logger = require('morgan');
 const indexRouter = require('./src/routes/index');
 const subletRouter = require('./src/routes/subletRoute');
 const apartmentRouter = require('./src/routes/apartmentRoute');
+const userRouter = require('./src/routes/userRoute');
 
 const app = express();
 const cors = require('cors');
@@ -27,6 +28,7 @@ app.use(express.static(path.join(__dirname, '../subletim-app/dist/subletim-app')
 app.use('/', indexRouter);
 app.use('/subletRoute', subletRouter);
 app.use('/apartmentRoute', apartmentRouter);
+app.use('/userRoute', userRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

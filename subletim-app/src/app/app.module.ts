@@ -7,12 +7,14 @@ import {FormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
 import {HttpModule} from "@angular/http";
 import {ApartmentComponents} from "./components/apartment.components";
+import {UserComponent} from "./components/user.components";
 
 @NgModule({
   declarations: [
     AppComponent,
     SubletsComponent,
-    ApartmentComponents
+    ApartmentComponents,
+    UserComponent
   ],
   imports: [
     BrowserModule,
