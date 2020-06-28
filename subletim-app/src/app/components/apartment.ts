@@ -1,9 +1,8 @@
-// import user
 export class Apartment{
   _id: object;
-  address: string;
   apartmentName: string;
+  address: string;
   city: string;
-  //owner: user;
+  owner: string;
   roomNumber: number;
 }

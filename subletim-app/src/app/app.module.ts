@@ -9,6 +9,7 @@ import {HttpModule} from "@angular/http";
 import {AddSubletComponent} from "./components/addSubletComponent/addSublet.component";
 import {ApartmentComponents} from "./components/apartment.components";
 import {UserComponent} from "./components/user.components";
+import {addApartmentComponent} from "./components/addApartmentComponent/addApartment.component";
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import {UserComponent} from "./components/user.components";
     AddSubletComponent,
     SubletsComponent,
     ApartmentComponents,
-    UserComponent
+    UserComponent,
+    addApartmentComponent
   ],
   imports: [
     BrowserModule,
