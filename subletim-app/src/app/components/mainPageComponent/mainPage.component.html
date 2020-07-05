@@ -1,0 +1,15 @@
+<div *ngIf="!addApartment && !searchSublet && !addSublet" class="main-page">
+  <img src="../../../assets/logo.svg">
+  <div class="menu">
+  <button (click)="toggleAddSublet()" class="main-buttons"> Add Sublet </button>
+
+  <button (click)="toggleSearchSublet()" class="main-buttons"> Search Sublet </button>
+
+  <button (click)="toggleAddApartment()" class="main-buttons"> Add Apartment </button>
+  </div>
+
+</div>
+
+<add-sublet *ngIf="addSublet" (showAddSubletChange)="addSublet = !addSublet"></add-sublet>
+<sublets *ngIf="searchSublet" (showSubletsListChange)="searchSublet = !searchSublet"></sublets>
+<add-apartment *ngIf="addApartment" (showAddApartmentChange)="addApartment = !addApartment"></add-apartment>

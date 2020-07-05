@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {ApartmentService} from "../../services/apartment.service";
-import {Apartment} from "../apartment";
+import {Apartment} from "../apartmentComponent/apartment";
 
 @Component({
   selector: 'add-apartment',
@@ -20,6 +20,7 @@ export class addApartmentComponent {
   @Output() apartmentToEditChange = new EventEmitter<boolean>();
   @Input() createOrEdit;
   @Output() createOrEditChange = new EventEmitter<boolean>();
+  @Output() showAddApartmentChange = new EventEmitter<boolean>();
 
   constructor(private apartmentService:ApartmentService) {
   }
@@ -79,5 +80,9 @@ export class addApartmentComponent {
 
   valid() {
     return (this.apartmentName && this.address && this.city && this.roomNumber && this.owner);
+  }
+
+  returnToMainPage() {
+    this.showAddApartmentChange.emit(false);
   }
 }

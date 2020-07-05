@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import {SubletService} from "../services/sublet.service";
+import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {SubletService} from "../../services/sublet.service";
 import {Sublet} from "./sublet";
 
 
@@ -14,6 +14,7 @@ export class SubletsComponent {
   sublets: Sublet[];
   subletToEdit: number;
   createOrEdit: boolean = false;
+  @Output() showSubletsListChange = new EventEmitter<boolean>();
 
   constructor(private subletService:SubletService) {
     this.subletService.getSublets()
@@ -27,12 +28,11 @@ export class SubletsComponent {
     this.createOrEdit = true;
   }
 
-  finishedAddingOrCreate(){
+  finishedAddingOrCreate() {
     this.subletService.getSublets()
       .subscribe(sublets => {
         this.sublets = sublets;
       });
-    console.log('got here 4');
     this.subletToEdit = null;
     this.createOrEdit = false;
   }
@@ -53,5 +53,9 @@ export class SubletsComponent {
   editSublet(sublet){
     this.subletToEdit = sublet;
     this.createOrEdit = true;
+  }
+
+  returnToMainPage() {
+    this.showSubletsListChange.emit(false);
   }
 }
