@@ -9,6 +9,10 @@ import {HttpModule} from "@angular/http";
 import {AddSubletComponent} from "./components/addSubletComponent/addSublet.component";
 import {ApartmentComponents} from "./components/apartmentComponent/apartment.components";
 import {UserComponent} from "./components/user.components";
+import {AdminComponent} from "./components/admin/admin.component";
+import {LoginComponent} from "./components/login/login.component";
+import {RegisterComponent} from "./components/register/register.component";
+import {RouterModule} from "@angular/router";
 import {addApartmentComponent} from "./components/addApartmentComponent/addApartment.component";
 import {MainPageComponent} from "./components/mainPageComponent/mainPage.component";
 
@@ -21,7 +25,10 @@ import {MainPageComponent} from "./components/mainPageComponent/mainPage.compone
     ApartmentComponents,
     UserComponent,
     addApartmentComponent,
-    MainPageComponent
+    MainPageComponent,
+    AdminComponent,
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,

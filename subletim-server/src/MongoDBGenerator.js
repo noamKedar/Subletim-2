@@ -58,13 +58,13 @@ function insertToDB(collectionName, objectType, objectsArr) {
 }
 
 const user1 = new UserModel({ _id : new ObjectID, firstName: "Shaked", lastName: "Rozenfarb", email: "shaked@gmail.com",
-    userName: "shakroz", phoneNumber: "0502870099"
+    userName: "shakroz", phoneNumber: "0502870099", password: "123456"
 });
 const user2 = new UserModel({ _id : new ObjectID, firstName: "Michal", lastName: "Katzir", email: "michal@gmail.com",
-    userName: "michalkat", phoneNumber: "0501122334"
+    userName: "michalkat", phoneNumber: "0501122334", password: "123456"
 });
 const user3 = new UserModel({ _id : new ObjectID, firstName: "Noam", lastName: "Kedar", email: "noam@gmail.com",
-    userName: "noamked", phoneNumber: "0501234567"
+    userName: "noamked", phoneNumber: "0501234567", password: "123456"
 });
 
 const usersArr = [user1, user2, user3]
