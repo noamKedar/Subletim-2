@@ -1,3 +1,4 @@
+
 <div *ngIf="!createOrEdit" class="title">Sublets List</div>
 <input *ngIf="!createOrEdit" type="button" (click)="addNewSublet()" value="Add New Sublet" class="btn btn-danger button new-button">
 <table *ngIf="!createOrEdit">
@@ -25,10 +26,14 @@
       {{sublet.apartment}}
     </td>
     <td>
-      <img src="../../assets/pencil.svg" (click)="editSublet(sublet)" class="icon">
-      <img src="../../assets/trash.svg" (click)="deleteSublet(sublet._id)" class="icon">
+      <img src="../../../assets/pencil.svg" (click)="editSublet(sublet)" class="icon">
+      <img src="../../../assets/trash.svg" (click)="deleteSublet(sublet._id)" class="icon">
     </td>
   </tr>
 </table>
+
+<div>
+  <img src="../../../assets/home.svg" (click)="returnToMainPage()" class="home-icon">
+</div>
 
 <add-sublet *ngIf="createOrEdit" [createOrEdit]="createOrEdit" [subletToEdit]="subletToEdit" (createOrEditChange)="finishedAddingOrCreate()"></add-sublet>

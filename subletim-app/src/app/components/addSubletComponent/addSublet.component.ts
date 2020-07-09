@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {SubletService} from "../../services/sublet.service";
-import {Sublet} from "../sublet";
+import {Sublet} from "../subletComponent/sublet";
 
 
 @Component({
@@ -20,6 +20,7 @@ export class AddSubletComponent {
   @Output() subletToEditChange = new EventEmitter<boolean>();
   @Input() createOrEdit;
   @Output() createOrEditChange = new EventEmitter<boolean>();
+  @Output() showAddSubletChange = new EventEmitter<boolean>();
 
   constructor(private subletService:SubletService) {
   }
@@ -43,7 +44,6 @@ export class AddSubletComponent {
     }
     this.subletToEditChange.emit(null);
     this.createOrEditChange.emit(false);
-
   }
 
   addSublet(){
@@ -79,5 +79,9 @@ export class AddSubletComponent {
 
   valid() {
     return (this.subletName && this.startDate && this.endDate && this.price && this.apartment);
+  }
+
+  returnToMainPage() {
+    this.showAddSubletChange.emit(false);
   }
 }
