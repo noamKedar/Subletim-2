@@ -30,11 +30,4 @@ export class UserService{
     return this.http.put('/userRoute/user/'+user._id, JSON.stringify(user), {headers: headers})
       .map(res => res.json());
   }
-  register(user) {
-    return this.http.post('/userRoute/user/register', user);
-  }
-
-  login(userName, password) {
-    return this.http.post('/userRoute/user/authenticate', { userName, password });
-  }
 }

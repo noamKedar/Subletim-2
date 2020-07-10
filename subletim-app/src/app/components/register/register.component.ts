@@ -1,12 +1,14 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {UserService} from "../../services/user.service";
+import {AuthenticationService} from "../../services/authentication.service";
 
 @Component({
   selector: 'register',
   templateUrl: './register.component.html',
   providers: [UserService],
-  styleUrls: ['./register.component.css'] })
+  styleUrls: ['./register.component.css']
+})
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
   submitted = false;
@@ -16,10 +18,15 @@ export class RegisterComponent implements OnInit {
   userName: string = "";
   phoneNumber: number;
   password: string = "";
+  @Output() showRegisterChange = new EventEmitter<boolean>();
+  cancel: boolean = false;
+  registerUser: boolean = false;
+  private user: any;
 
   constructor(
     private formBuilder: FormBuilder,
-    private userService: UserService) {
+    private userService: UserService,
+    private authenticationService: AuthenticationService) {
   }
 
   ngOnInit() {
@@ -33,22 +40,37 @@ export class RegisterComponent implements OnInit {
     });
   }
 
-  addUser(){
+  async addUser() {
     this.submitted = true;
+    if (this.user) {
+      this.user.clean
+    }
+    await this.innerRegister()
+  }
 
-    this.userService.register(this.registerForm.value)
+  innerRegister() {
+    this.authenticationService.register(this.registerForm.value)
       .subscribe(user => {
-        this.firstName = '';
-        this.lastName = '';
-        this.email = '';
-        this.userName = '';
-        this.phoneNumber = null;
-        this.password = '';
+        this.user = user
+        if (this.user && !this.validateResult()) {
+          this.registerUser = !this.registerUser;
+        }
       });
   }
 
-  get f() { return this.registerForm.controls; }
+  get f() {
+    return this.registerForm.controls;
+  }
+
   valid() {
     return (!this.registerForm.invalid);
+  }
+
+  toggleCancel() {
+    this.cancel = !this.cancel
+  }
+
+  validateResult() {
+    return this.user === "Username already exists";
   }
 }

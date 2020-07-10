@@ -1,5 +1,6 @@
+<div *ngIf="!loginUser && !register" class="login">
 <h2>Login</h2>
-<form [formGroup]="loginForm" (ngSubmit)="loginUser()">
+<form [formGroup]="loginForm" (ngSubmit)="login()">
   <div class="form-group">
     <label for="userName">Username</label>
     <input type="text" formControlName="userName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.userName.errors }" />
@@ -16,5 +17,14 @@
   </div>
   <div class="form-group">
     <button type="submit" class="btn btn-success button" [disabled]="!valid()" >Login</button>
-  </div>
+    <button (click)="toggleRegister()" class="btn btn-success button">Register</button>
+    <div *ngIf="submitted && validateResult()" class="invalid-feedback">
+      <div *ngIf="validateResult()">Username or password is incorrect</div>
+    </div>
+</div>
 </form>
+</div>
+
+<main-page *ngIf="loginUser" (showLoginChange)="loginUser = !loginUser"></main-page>
+<register *ngIf="register" (showRegisterChange)="register = !register"></register>
+
