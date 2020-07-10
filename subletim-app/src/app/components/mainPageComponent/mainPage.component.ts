@@ -1,5 +1,8 @@
-import {Component} from "@angular/core";
+import {Component, EventEmitter, Output} from "@angular/core";
 import {SubletService} from "../../services/sublet.service";
+import {User} from "../user";
+import {AuthenticationService} from "../../services/authentication.service";
+import {UserService} from "../../services/user.service";
 
 @Component({
   selector: 'main-page',
@@ -12,6 +15,14 @@ export class MainPageComponent {
   addSublet: boolean = false;
   searchSublet: boolean = false;
   addApartment: boolean = false;
+  logoutUser: boolean = false;
+  currentUser: User;
+  @Output() showLoginChange = new EventEmitter<boolean>();
+
+  constructor(
+    private authenticationService: AuthenticationService) {
+    this.currentUser = this.authenticationService.currentUserValue;
+  }
 
   toggleAddSublet() {
     this.addSublet = !this.addSublet;
@@ -23,6 +34,11 @@ export class MainPageComponent {
 
   toggleAddApartment() {
     this.addApartment = !this.addApartment;
+  }
+
+  toggleLogoutUser(){
+    this.authenticationService.logout();
+    this.logoutUser = !this.logoutUser;
   }
 }
 

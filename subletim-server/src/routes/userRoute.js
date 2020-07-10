@@ -58,7 +58,6 @@ router.put('/user/:id', function (req, res, next) {
 //Authenticate
 router.post('/user/authenticate', function (req, res, next) {
     const {userName, password} = req.body;
-    //const user = db.usersCollection.find({$and: [{userName: userName}, {password: password}]});
     db.usersCollection.findOne({$and: [{userName: userName}, {password: password}]}, function (err, user) {
         if (err) {
             res.send(err);
@@ -66,29 +65,22 @@ router.post('/user/authenticate', function (req, res, next) {
         if (!user) {
             res.json("Username or password is incorrect");
         } else {
-            return ({
-                id: user.id,
-                userName: user.userName,
-                firstName: user.firstName,
-                lastName: user.lastName,
-                phoneNumber: user.phoneNumber,
-                email: user.email
-            })
+            res.json(user)
         }
     })
 });
 //Register
 router.post('/user/register', function (req, res, next) {
-    const user = req.body
+    const userToSave = req.body
 
-    db.usersCollection.findOne({userName: user.userName}, function (err, user) {
+    db.usersCollection.findOne({userName: userToSave.userName}, function (err, user) {
         if (err) {
             res.send(err);
         }
         if (user) {
-            res.json("user name already exists");
+            res.json("Username already exists");
         } else {
-            db.usersCollection.save(user, function (err, task) {
+            db.usersCollection.save(userToSave, function (err, task) {
                 if (err) {
                     res.send(err);
                 }
