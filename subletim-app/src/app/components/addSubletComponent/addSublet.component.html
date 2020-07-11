@@ -2,23 +2,25 @@
 <form class="well" (submit)="addOrUpdateSublet($event)">
   <div class="form-group">
     <label for="subletName" class="input-title">SUBLET NAME</label>
-    <input type="text" [(ngModel)]="subletName" name="subletName" class="form-control" placeholder="Enter Sublet Name">
+    <input id="subletName" type="text" [(ngModel)]="subletName" name="subletName" class="form-control" placeholder="Enter Sublet Name">
   </div>
   <div class="form-group">
     <label for="startDate" class="input-title">START DATE</label>
-    <input type="date" [ngModel]="startDate | date:'yyyy-MM-dd'" name="startDate" class="form-control" placeholder="Enter Start Date">
+    <input id="startDate" type="date" [ngModel]="startDate | date:'yyyy-MM-dd'" name="startDate" class="form-control" placeholder="Enter Start Date">
   </div>
   <div class="form-group">
     <label for="endDate" class="input-title">END DATE</label>
-    <input type="date" [ngModel]="endDate | date:'yyyy-MM-dd'" name="endDate" class="form-control" placeholder="Enter End Date">
+    <input id="endDate" type="date" [ngModel]="endDate | date:'yyyy-MM-dd'" name="endDate" class="form-control" placeholder="Enter End Date">
   </div>
   <div class="form-group">
     <label for="price" class="input-title">PRICE</label>
-    <input type="number" [(ngModel)]="price" name="price" class="form-control" placeholder="Enter Price">
+    <input id="price" type="number" [(ngModel)]="price" name="price" class="form-control" placeholder="Enter Price">
   </div>
   <div class="form-group">
     <label for="apartment" class="input-title">APARTMENT</label>
-    <input type="text" [(ngModel)]="apartment" name="apartment" class="form-control" placeholder="Select Apartment">
+    <select id="apartment" placeholder="Select Apartment" [(ngModel)]="apartment" name="apartment" size="{{apartments.length}}">
+      <option *ngFor="let apartment of apartments" [ngValue]="apartment">{{apartment.apartmentName}}</option>
+    </select>
   </div>
   <button type="submit" class="btn btn-success button" [disabled]="!valid()">Submit</button>
 </form>

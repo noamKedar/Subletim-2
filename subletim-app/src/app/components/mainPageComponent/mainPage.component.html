@@ -1,6 +1,8 @@
 <div *ngIf="!addApartment && !searchSublet && !addSublet && !logoutUser" class="main-page">
-  <h1>Hi {{currentUser.firstName}}!</h1>
-  <button (click)="toggleLogoutUser()" class="main-buttons">Logout</button>
+  <div class="left">
+    <h2 class="hi-user">Hi {{currentUser.firstName}}!</h2>
+    <button (click)="toggleLogoutUser()" class="main-buttons position-absolute">Logout</button>
+  </div>
   <div>
     <img src="../../../assets/logo.svg">
   </div>
@@ -11,6 +13,9 @@
 
   <button (click)="toggleAddApartment()" class="main-buttons"> Add Apartment </button>
   </div>
+
+  <graphs></graphs>
+
 </div>
 
 <add-sublet *ngIf="addSublet" (showAddSubletChange)="addSublet = !addSublet"></add-sublet>
