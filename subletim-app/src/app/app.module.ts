@@ -15,6 +15,7 @@ import {RegisterComponent} from "./components/register/register.component";
 import {RouterModule} from "@angular/router";
 import {addApartmentComponent} from "./components/addApartmentComponent/addApartment.component";
 import {MainPageComponent} from "./components/mainPageComponent/mainPage.component";
+import {GraphsComponent} from "./components/graphsComponent/graphs.component";
 
 @NgModule({
   declarations: [
@@ -28,7 +29,9 @@ import {MainPageComponent} from "./components/mainPageComponent/mainPage.compone
     MainPageComponent,
     AdminComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    MainPageComponent,
+    GraphsComponent
   ],
   imports: [
     BrowserModule,
@@ -38,6 +41,6 @@ import {MainPageComponent} from "./components/mainPageComponent/mainPage.compone
     ReactiveFormsModule,
   ],
   providers: [],
-  bootstrap: [AppComponent, SubletsComponent, AddSubletComponent]
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

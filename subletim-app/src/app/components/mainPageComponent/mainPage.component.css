@@ -14,3 +14,20 @@
   border-color: transparent;
   cursor: pointer;
 }
+
+.left {
+  display: inline-block;
+  position: absolute;
+  left: 0;
+}
+
+.hi-user {
+  margin: 5px;
+  display: inline-block;
+}
+
+.position-absolute {
+  position: absolute;
+}
+
+

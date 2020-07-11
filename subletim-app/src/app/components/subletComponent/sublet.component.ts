@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {SubletService} from "../../services/sublet.service";
 import {Sublet} from "./sublet";
+import {ApartmentService} from "../../services/apartment.service";
 
 
 @Component({
@@ -16,10 +17,19 @@ export class SubletsComponent {
   createOrEdit: boolean = false;
   @Output() showSubletsListChange = new EventEmitter<boolean>();
 
-  constructor(private subletService:SubletService) {
+  constructor(private subletService:SubletService, private apartmentService: ApartmentService) {
     this.subletService.getSublets()
       .subscribe(sublets => {
-        this.sublets = sublets;
+        this.apartmentService.getApartments().subscribe(apartments => {
+          const apartmentsDict = {};
+          apartments.forEach(apartment => {
+            apartmentsDict[apartment._id] = apartment;
+          });
+          sublets.forEach(sublet => {
+            sublet.apartmentObject = apartmentsDict[sublet.apartment]
+          });
+          this.sublets = sublets;
+        });
       });
   }
 

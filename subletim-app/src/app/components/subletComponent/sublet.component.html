@@ -8,6 +8,7 @@
     <th>End Date</th>
     <th>Price</th>
     <th>Apartment</th>
+    <th>Number Of Rooms</th>
   </tr>
   <tr *ngFor="let sublet of sublets">
     <td>
@@ -23,7 +24,10 @@
       {{sublet.price}}
     </td>
     <td>
-      {{sublet.apartment}}
+      {{sublet.apartmentObject.apartmentName}}
+    </td>
+    <td>
+      {{sublet.apartmentObject.roomNumber}}
     </td>
     <td>
       <img src="../../../assets/pencil.svg" (click)="editSublet(sublet)" class="icon">

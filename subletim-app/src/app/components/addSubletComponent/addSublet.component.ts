@@ -1,6 +1,8 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {SubletService} from "../../services/sublet.service";
 import {Sublet} from "../subletComponent/sublet";
+import {Apartment} from "../apartmentComponent/apartment";
+import {ApartmentService} from "../../services/apartment.service";
 
 
 @Component({
@@ -15,14 +17,18 @@ export class AddSubletComponent {
   startDate: Date;
   endDate: Date;
   price: number;
-  apartment: string = "";
+  apartment: Apartment;
+  apartments: Apartment[];
   @Input() subletToEdit;
   @Output() subletToEditChange = new EventEmitter<boolean>();
   @Input() createOrEdit;
   @Output() createOrEditChange = new EventEmitter<boolean>();
   @Output() showAddSubletChange = new EventEmitter<boolean>();
 
-  constructor(private subletService:SubletService) {
+  constructor(private subletService:SubletService, private apartmentService: ApartmentService) {
+    this.apartmentService.getApartments().subscribe(apartments => {
+      this.apartments = apartments;
+    })
   }
 
   ngOnInit() {
@@ -61,7 +67,7 @@ export class AddSubletComponent {
         this.startDate = null;
         this.endDate = null;
         this.price = 0;
-        this.apartment = '';
+        this.apartment = null;
       });
   }
 
