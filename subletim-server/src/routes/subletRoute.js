@@ -4,7 +4,7 @@ var mongojs = require('mongojs');
 var db = mongojs('subletimDB', ['subletimCollection']); //local mongo installation, DB is mydb
 
 
-// Get All Tasks
+// Get All Subletim
 router.get('/sublets', function(req, res, next) {
     db.subletimCollection.find(function(err, tasks){
         if(err) {
@@ -14,7 +14,7 @@ router.get('/sublets', function(req, res, next) {
     });
 });
 
-// Get Single Task
+// Get Single Sublet
 router.get('/sublet/:id', function(req, res, next) {
     db.subletimCollection.findOne({_id: mongojs.ObjectId(req.params.id)}, function(err, task){
         if(err){
@@ -23,7 +23,7 @@ router.get('/sublet/:id', function(req, res, next) {
         res.json(task);
     });
 });
-//Save Task
+//Save Sublet
 
 router.post('/sublet', function(req, res, next){
     var sublet = req.body;
@@ -41,7 +41,7 @@ router.post('/sublet', function(req, res, next){
         });
     }
 });
-// Delete Task
+// Delete Sublet
 router.delete('/sublet/:id', function(req, res, next){
     db.subletimCollection.remove({_id: mongojs.ObjectId(req.params.id)}, function(err, task){
         if(err){
@@ -50,7 +50,7 @@ router.delete('/sublet/:id', function(req, res, next){
         res.json(task);
     });
 });
-// Update Task
+// Update Sublet
 router.put('/sublet/:id', function(req, res, next) {
     var sublet = req.body;
     if (!sublet){
@@ -66,6 +66,97 @@ router.put('/sublet/:id', function(req, res, next) {
             }
             res.json(sublet);
         });
+    }
+});
+
+router.get('/searchSublets', function(req, res, next) {
+    let startDate = new Date(req.query.startDate);
+    let endDate = new Date(req.query.endDate);
+    let price = parseInt(req.query.price);
+    let sdNan = isNaN(startDate.getTime())
+    let edNan = isNaN(endDate.getTime())
+    let pNan = isNaN(price);
+
+    if (!req.query){
+        res.status(400);
+        res.json({
+            "error":"Bad Data"
+        });
+    } else {
+       if(sdNan && edNan && pNan){
+           db.subletimCollection.find({}, function(err, sublets){
+               if(err) {res.send(err);}
+               res.json(sublets);
+               console.log(sublets)
+           });
+       }
+       else if (sdNan && edNan  && !pNan){
+           db.subletimCollection.find({
+               price:{$lte: price}
+           }, function(err, sublets){
+               if(err) {res.send(err);}
+               res.json(sublets);
+               console.log(sublets)});
+       }
+       else if (!sdNan && edNan  && price == pNan) {
+           db.subletimCollection.find({
+               startDate: {$gte: startDate}
+           }, function(err, sublets){
+               if(err) {res.send(err);}
+               res.json(sublets);
+               console.log(sublets)
+           });
+       }
+       else if (sdNan && !edNan && pNan) {
+           db.subletimCollection.find({
+               endDate: {$lte: endDate}
+           }, function(err, sublets){
+               if(err) {res.send(err);}
+               res.json(sublets);
+               console.log(sublets)
+           });
+       }
+       else if (!sdNan && !edNan && price) {
+           db.subletimCollection.find({
+               startDate: {$gte: startDate},
+               endDate: {$lte: endDate}
+           }, function(err, sublets){
+               if(err) {res.send(err);}
+               res.json(sublets);
+               console.log(sublets)
+           });
+       }
+       else if (!sdNan && edNan && !pNan) {
+           db.subletimCollection.find({
+               startDate: {$gte: startDate},
+               price:{$lte: price}
+           }, function(err, sublets){
+               if(err) {res.send(err);}
+               res.json(sublets);
+               console.log(sublets)
+           });
+       }
+       else if (sdNan && !edNan && !p) {
+           db.subletimCollection.find({
+               endDate: {$lte: endDate},
+               price:{$lte: price}
+           }, function(err, sublets){
+               if(err) {res.send(err);}
+               res.json(sublets);
+               console.log(sublets)
+           });
+       }
+       else if(!sdNan && !edNan && !pNan) {
+           db.subletimCollection.find({
+               startDate: {$gte: startDate},
+               endDate: {$lte: endDate},
+               price:{$lte: price}
+           }, function(err, sublets){
+               if(err) {res.send(err);}
+               res.json(sublets);
+               console.log(sublets)
+           });
+       }
     }
 });
 

@@ -83,12 +83,12 @@ const apartment3 = new ApartmentModel({_id : new ObjectID, apartmentName: "Beaut
 const apartmentsArr = [apartment1, apartment2, apartment3];
 insertToDB("apartmentsCollection", "apartments", apartmentsArr);
 
-const sublet1 = new SubletModel({_id : new ObjectID, subletName: "Best sublet", startDate: Date("10/09/2020"),
-    endDate: Date("10/10/2020"), price: 6000, apartment: apartment1._id });
-const sublet2 = new SubletModel({_id : new ObjectID, subletName: "Amazing sublet", startDate: Date("1/09/2020"),
-    endDate: Date("1/10/2020"), price: 6500, apartment: apartment2._id});
-const sublet3 = new SubletModel({_id : new ObjectID, subletName: "Best sublet", startDate: Date("1/12/2020"),
-    endDate: Date("26/12/2020"), price: 5000, apartment: apartment3._id });
+const sublet1 = new SubletModel({_id : new ObjectID, subletName: "Best sublet", startDate: new Date("2020-08-02"),
+    endDate: new Date("2020-08-07"), price: 6000, apartment: apartment1._id });
+const sublet2 = new SubletModel({_id : new ObjectID, subletName: "Amazing sublet", startDate: new Date("2020-09-15"),
+    endDate: new Date("2020-09-30"), price: 6500, apartment: apartment2._id});
+const sublet3 = new SubletModel({_id : new ObjectID, subletName: "Best sublet", startDate: new Date("2020-10-01"),
+    endDate: new Date("2020-10-10"), price: 5000, apartment: apartment3._id });
 
 const subletsArr = [sublet1, sublet2, sublet3]
 insertToDB("subletimCollection", "subletim", subletsArr);

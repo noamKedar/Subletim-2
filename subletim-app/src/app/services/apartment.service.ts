@@ -1,6 +1,7 @@
 import{Injectable} from '@angular/core';
 import {Http, Headers} from '@angular/http';
 import 'rxjs/add/operator/map';
+import {HttpParams} from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root',
@@ -27,6 +28,17 @@ export class ApartmentService{
     var headers = new Headers();
     headers.append('Content-Type', 'application/json');
     return this.http.put('/apartmentRoute/apartment/'+apartment._id, JSON.stringify(apartment), {headers: headers})
+      .map(res => res.json());
+  }
+
+  searchApartment(city, address, rooms){
+    let params = new HttpParams()
+      .set("city", city)
+      .set("address", address)
+      .set("rooms", rooms)
+
+    var config = {params: {city:city, address:address, rooms:rooms}}
+    return this.http.get('apartmentRoute/searchApartments',  config)
       .map(res => res.json());
   }
 }

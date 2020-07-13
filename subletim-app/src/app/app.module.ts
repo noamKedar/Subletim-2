@@ -41,6 +41,6 @@ import {GraphsComponent} from "./components/graphsComponent/graphs.component";
     ReactiveFormsModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent, SubletsComponent]
 })
 export class AppModule { }

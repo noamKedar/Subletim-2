@@ -11,6 +11,7 @@ import {Apartment} from './apartment'
 
 export class ApartmentComponents {
   apartments: Apartment[];
+  apartmentsWithoutSearch: Apartment[];
   apartmentToEdit: number;
   createOrEdit: boolean = false;
 
@@ -53,4 +54,19 @@ editApartment(apartment){
   this.apartmentToEdit = apartment;
   this.createOrEdit = true;
 }
+
+  searchApartment(){
+    this.apartmentToEdit = null;
+    this.createOrEdit = false;
+
+    let city = (<HTMLInputElement>document.getElementById("cityTxt")).value
+    let address = (<HTMLInputElement>document.getElementById("addressTxt")).value
+    let rooms = (<HTMLInputElement>document.getElementById("roomTxt")).value
+
+    let res = this.apartmentService.searchApartment(city, address, rooms).subscribe(apartments => {
+      this.apartmentsWithoutSearch = this.apartments;
+      this.apartments = apartments;
+    });
+  }
+
 }
