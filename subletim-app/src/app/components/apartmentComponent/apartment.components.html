@@ -1,6 +1,17 @@
-<div *ngIf="!createOrEdit" class="title">Apartments List</div>
-<input *ngIf="!createOrEdit" type="button" (click)="addNewApartment()" value="Add New Apartment" class="btn btn-danger button new-button">
-<table *ngIf="!createOrEdit">
+<div *ngIf="!createOrEdit">
+<div class="title">Apartments List</div>
+
+<input type="button" (click)="addNewApartment()" value="Add New Apartment" class="btn btn-danger button new-button">
+  <br><br>
+  <label>City:</label>
+  <input id="cityTxt" type="text">
+  <label>Address:</label>
+  <input id="addressTxt" type="text">
+  <label>Room Number:</label>
+  <input id="roomTxt" type="number">
+  <input  type="button" (click)="searchApartment()" value="Search" class="btn-danger button new-button">
+
+<table>
   <tr>
     <th>Apartment Name</th>
     <th>Address</th>
@@ -30,5 +41,5 @@
     </td>
   </tr>
 </table>
-
+</div>
 <add-apartment *ngIf="createOrEdit" [createOrEdit]="createOrEdit" [apartmentToEdit]="apartmentToEdit" (createOrEditChange)="finishedAddingOrCreate()"></add-apartment>

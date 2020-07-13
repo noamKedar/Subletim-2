@@ -1,7 +1,17 @@
 
-<div *ngIf="!createOrEdit" class="title">Sublets List</div>
-<input *ngIf="!createOrEdit" type="button" (click)="addNewSublet()" value="Add New Sublet" class="btn btn-danger button new-button">
-<table *ngIf="!createOrEdit">
+<div *ngIf="!createOrEdit">
+<div class="title">Sublets List</div>
+
+<input type="button" (click)="addNewSublet()" value="Add New Sublet" class="btn btn-danger button new-button">
+  <br><br>
+  <label>Start Date:</label>
+  <input id="startDateTxt" type="date">
+  <label>End Date:</label>
+  <input id="endDateTxt" type="date">
+  <label>Price:</label>
+  <input id="priceTxt" type="number">
+  <input  type="button" (click)="searchSublet()" value="Search" class="btn-danger button new-button">
+<table>
   <tr>
     <th>Name</th>
     <th>Start Date</th>
@@ -35,7 +45,7 @@
     </td>
   </tr>
 </table>
-
+</div>
 <div>
   <img src="../../../assets/home.svg" (click)="returnToMainPage()" class="home-icon">
 </div>

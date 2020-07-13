@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {SubletService} from "../../services/sublet.service";
 import {Sublet} from "./sublet";
 import {ApartmentService} from "../../services/apartment.service";
-
+import 'rxjs/add/operator/map';
 
 @Component({
   selector: 'sublets',
@@ -13,6 +13,7 @@ import {ApartmentService} from "../../services/apartment.service";
 
 export class SubletsComponent {
   sublets: Sublet[];
+  subletsWithoutSearch: Sublet[];
   subletToEdit: number;
   createOrEdit: boolean = false;
   @Output() showSubletsListChange = new EventEmitter<boolean>();
@@ -67,5 +68,19 @@ export class SubletsComponent {
 
   returnToMainPage() {
     this.showSubletsListChange.emit(false);
+  }
+
+  searchSublet(){
+    this.subletToEdit = null;
+    this.createOrEdit = false;
+
+    let startDate = (<HTMLInputElement>document.getElementById("startDateTxt")).value
+    let endDate = (<HTMLInputElement>document.getElementById("endDateTxt")).value
+    let price = (<HTMLInputElement>document.getElementById("priceTxt")).value
+
+    let res = this.subletService.searchSublet(startDate, endDate, price).subscribe(sublets => {
+      this.subletsWithoutSearch = this.sublets;
+      this.sublets = sublets;
+    });
   }
 }

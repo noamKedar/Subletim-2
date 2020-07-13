@@ -84,4 +84,105 @@ router.put('/apartment/:id', function(req, res, next){
     }
 });
 
+router.get('/searchApartments', function(req, res, next) {
+    let city = req.query.city;
+    let address = req.query.address;
+    let rooms = parseInt(req.query.rooms);
+    let cityNan = !city
+    let addressNan = !address;
+    let roomsNan = isNaN(rooms);
+
+    if (!req.query) {
+        res.status(400);
+        res.json({
+            "error": "Bad Data"
+        });
+    } else {
+        if (cityNan && addressNan && roomsNan) {
+            db.apartmentsCollection.find({}, function (err, apartments) {
+                if (err) {
+                    res.send(err);
+                }
+                res.json(apartments);
+                console.log(apartments)
+            });
+        } else if (!cityNan && !addressNan && !roomsNan) {
+            db.apartmentsCollection.find({
+                city: city,
+                address: address,
+                roomNumber: rooms
+            }, function (err, apartments) {
+                if (err) {
+                    res.send(err);
+                }
+                res.json(apartments);
+                console.log(apartments)
+            });
+        } else if (!cityNan && addressNan && roomsNan) {
+            db.apartmentsCollection.find({
+                city: city
+            }, function (err, apartments) {
+                if (err) {
+                    res.send(err);
+                }
+                res.json(apartments);
+                console.log(apartments)
+            });
+        } else if (cityNan && !addressNan && roomsNan) {
+            db.apartmentsCollection.find({
+                address: address
+            }, function (err, apartments) {
+                if (err) {
+                    res.send(err);
+                }
+                res.json(apartments);
+                console.log(apartments)
+            });
+        } else if (cityNan && addressNan && !roomsNan) {
+            db.apartmentsCollection.find({
+                roomNumber: rooms
+            }, function (err, apartments) {
+                if (err) {
+                    res.send(err);
+                }
+                res.json(apartments);
+                console.log(apartments)
+            });
+        } else if (!cityNan && addressNan && !roomsNan) {
+            db.apartmentsCollection.find({
+                city: city,
+                roomNumber: rooms
+            }, function (err, apartments) {
+                if (err) {
+                    res.send(err);
+                }
+                res.json(apartments);
+                console.log(apartments)
+            });
+        } else if (!cityNan && !addressNan && roomsNan) {
+            db.apartmentsCollection.find({
+                city: city,
+                address: address
+            }, function (err, apartments) {
+                if (err) {
+                    res.send(err);
+                }
+                res.json(apartments);
+                console.log(apartments)
+            });
+        } else if (cityNan && !addressNan && !roomsNan) {
+            db.apartmentsCollection.find({
+                address: address,
+                roomNumber: rooms
+            }, function (err, apartments) {
+                if (err) {
+                    res.send(err);
+                }
+                res.json(apartments);
+                console.log(apartments)
+            });
+        }
+    }
+})
+
 module.exports = router;

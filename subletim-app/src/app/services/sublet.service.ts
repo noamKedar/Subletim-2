@@ -1,7 +1,9 @@
 import {Injectable} from "@angular/core";
 import {Http, Headers} from '@angular/http';
 import 'rxjs/add/operator/map';
-import {parseTsconfigFile} from "@angular/core/schematics/utils/typescript/parse_tsconfig";
+import {HttpParams} from "@angular/common/http";
+
+
 
 @Injectable({
   providedIn: 'root',
@@ -34,4 +36,17 @@ export class SubletService{
     return this.http.put('subletRoute/sublet/'+sublet._id, JSON.stringify(sublet), {headers: headers})
       .map(res => res.json());
   }
+
+  searchSublet(startDate, endDate, price){
+
+    let params = new HttpParams()
+      .set("startDate", startDate)
+      .set("endDate", endDate)
+      .set("price", price)
+
+    var config = {params: {startDate:startDate, endDate:endDate, price:price}}
+    return this.http.get('subletRoute/searchSublets',  config)
+      .map(res => res.json());
+  }
+
 }
