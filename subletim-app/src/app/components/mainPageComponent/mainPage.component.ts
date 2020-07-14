@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Output} from "@angular/core";
 import {SubletService} from "../../services/sublet.service";
-import {User} from "../user";
+import {User} from "../user/user";
 import {AuthenticationService} from "../../services/authentication.service";
 import {UserService} from "../../services/user.service";
 
@@ -16,6 +16,8 @@ export class MainPageComponent {
   searchSublet: boolean = false;
   addApartment: boolean = false;
   logoutUser: boolean = false;
+  adminPage: boolean = false;
+  editUser: boolean = false;
   currentUser: User;
   @Output() showLoginChange = new EventEmitter<boolean>();
 
@@ -39,6 +41,18 @@ export class MainPageComponent {
   toggleLogoutUser(){
     this.authenticationService.logout();
     this.logoutUser = !this.logoutUser;
+  }
+
+  toggleAdminPage() {
+    this.adminPage = !this.adminPage;
+  }
+
+  isAdmin(){
+    return this.currentUser.isAdmin;
+  }
+
+  toggleEditPage(){
+    this.editUser = !this.editUser;
   }
 }
 

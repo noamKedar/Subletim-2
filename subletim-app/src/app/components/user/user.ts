@@ -6,4 +6,5 @@ export class User{
   userName: string;
   phoneNumber: string;
   password: string;
+  isAdmin: boolean
 }

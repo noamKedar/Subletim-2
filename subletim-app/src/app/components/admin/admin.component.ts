@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import { first } from 'rxjs/operators';
-import {User} from "../user";
+import {User} from "../user/user";
 import {AuthenticationService } from "../../services/authentication.service";
 import {UserService} from "../../services/user.service";
 
@@ -12,6 +12,7 @@ import {UserService} from "../../services/user.service";
 export class AdminComponent implements OnInit {
   currentUser: User;
   users = [];
+  @Output() showAdminPageChange = new EventEmitter<boolean>();
 
   constructor(
     private authenticationService: AuthenticationService,

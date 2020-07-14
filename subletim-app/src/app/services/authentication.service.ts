@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import {User} from "../components/user";
+import {User} from "../components/user/user";
+import {Headers} from "@angular/http";
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
@@ -39,5 +40,16 @@ export class AuthenticationService {
         this.currentUserSubject.next(user);
         return user;
       }));
+  }
+
+  updateUser(userId,user){
+    var headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.put('/userRoute/user/'+userId, JSON.stringify(user))
+      .map(res => {
+        localStorage.setItem('currentUser', JSON.stringify(res));
+        this.currentUserSubject.next(user);
+        return res
+      });
   }
 }

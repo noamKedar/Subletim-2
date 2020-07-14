@@ -1,12 +1,12 @@
 import {Component} from '@angular/core';
-import {UserService} from '../services/user.service';
+import {UserService} from '../../services/user.service';
 import {User} from './user';
 
 @Component({
   selector: 'user',
   templateUrl: 'user.components.html'
 })
-export class UserComponent{
+export class UserComponent {
   users: User[];
   firstName: string;
   lastName: string;
@@ -51,16 +51,5 @@ export class UserComponent{
     });
   }
 
-  updateUser(user) {
-    var _user = {
-      _id: user._id,
-      firstName: user.firstName,
-      lastName: user.lastName,
-      email: user.email,
-      userName: user.userName,
-      phoneNumber: user.phoneNumber,
-      password: user.password
-    };
-    this.userService.updateUser(_user);
-  }
 }
+

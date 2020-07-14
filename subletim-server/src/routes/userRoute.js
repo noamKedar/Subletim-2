@@ -47,11 +47,21 @@ router.put('/user/:id', function (req, res, next) {
             "error": "Bad Data"
         });
     } else {
-        db.usersCollection.update({_id: mongojs.ObjectId(req.params.id)}, req.body, {}, function (err, user) {
+        console.log(req.body)
+        db.usersCollection.update({_id: mongojs.ObjectId(req.params.id)}, {$set: req.body}, function (err, user) {
             if (err) {
                 res.send(err);
             }
-            res.json(user);
+            else{
+                db.usersCollection.findOne({_id: mongojs.ObjectId(req.params.id)}, function (err, user) {
+                    if (err) {
+                        res.send(err);
+                    }
+                    else{
+                        res.json(user);
+                    }
+                });
+            }
         });
     }
 });
