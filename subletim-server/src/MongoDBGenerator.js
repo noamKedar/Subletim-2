@@ -9,7 +9,11 @@ const user = new mongoose.Schema({
     email: String,
     userName: String,
     phoneNumber: String,
-    password: String
+    password: String,
+    isAdmin:  {
+        type: Boolean,
+        default: false
+    }
 });
 module.exports = user;
 
@@ -58,13 +62,13 @@ function insertToDB(collectionName, objectType, objectsArr) {
 }
 
 const user1 = new UserModel({ _id : new ObjectID, firstName: "Shaked", lastName: "Rozenfarb", email: "shaked@gmail.com",
-    userName: "shakroz", phoneNumber: "0502870099", password: "123456"
+    userName: "shakroz", phoneNumber: "0502870099", password: "123456", isAdmin: true
 });
 const user2 = new UserModel({ _id : new ObjectID, firstName: "Michal", lastName: "Katzir", email: "michal@gmail.com",
-    userName: "michalkat", phoneNumber: "0501122334", password: "123456"
+    userName: "michalkat", phoneNumber: "0501122334", password: "123456", isAdmin: true
 });
 const user3 = new UserModel({ _id : new ObjectID, firstName: "Noam", lastName: "Kedar", email: "noam@gmail.com",
-    userName: "noamked", phoneNumber: "0501234567", password: "123456"
+    userName: "noamked", phoneNumber: "0501234567", password: "123456", isAdmin: true
 });
 
 const usersArr = [user1, user2, user3]

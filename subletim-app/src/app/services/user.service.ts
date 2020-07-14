@@ -24,10 +24,5 @@ export class UserService{
     return this.http.delete('/userRoute/user/'+id)
       .map(res => res.json());
   }
-  updateUser(user){
-    var headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-    return this.http.put('/userRoute/user/'+user._id, JSON.stringify(user), {headers: headers})
-      .map(res => res.json());
-  }
+
 }
