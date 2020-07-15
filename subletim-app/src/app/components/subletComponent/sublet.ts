@@ -7,5 +7,5 @@ export class Sublet {
   price: number;
   //apartment: string;
   _id?: string;
-  apartmentObject: Apartment;
+  apartmentObject?: Apartment;
 }

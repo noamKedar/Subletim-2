@@ -10,10 +10,12 @@ export class ApartmentService{
   constructor(private http:Http){
     console.log('Apartment Service Initialized...');
   }
+
   getApartments(){
     return this.http.get('/apartmentRoute/apartments')
       .map(res => res.json());
   }
+
   getUserApartments(user){
     console.log('service:' + user)
     var config = {params: {user:user}}
@@ -27,10 +29,12 @@ export class ApartmentService{
     return this.http.post('/apartmentRoute/apartment', JSON.stringify(newApartment), {headers: headers})
       .map(res => res.json());
   }
+
   deleteApartment(id){
     return this.http.delete('/apartmentRoute/apartment/'+id)
       .map(res => res.json());
   }
+
   updateApartment(apartment){
     var headers = new Headers();
     headers.append('Content-Type', 'application/json');
