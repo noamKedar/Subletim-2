@@ -49,4 +49,8 @@ export class ApartmentService{
         .map(res => res.json());
     }
   }
+  groupByApartment(){
+    return this.http.get('apartmentRoute/groupByApartment')
+      .map(res => res.json());
+  }
 }

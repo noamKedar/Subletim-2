@@ -26,27 +26,18 @@ export class GraphsComponent {
   constructor(private subletService: SubletService, private apartmentService: ApartmentService) {
     this.subletService.getSublets()
       .subscribe(sublets => {
-        this.apartmentService.getApartments().subscribe(apartments => {
-          const apartmentsDict = {};
-          apartments.forEach(apartment => {
-            apartmentsDict[apartment._id] = apartment;
-          });
-          sublets.forEach(sublet => {
-            sublet.apartmentObject = apartmentsDict[sublet.apartment];
-            this.data[sublet.apartmentObject.city] ? this.data[sublet.apartmentObject.city] += 1: this.data[sublet.apartmentObject.city] = 1;
-            this.secondGraphData[sublet.apartmentObject.roomNumber] ? this.secondGraphData[sublet.apartmentObject.roomNumber] += 1: this.secondGraphData[sublet.apartmentObject.roomNumber] = 1;
+        this.apartmentService.groupByApartment().subscribe(data => {
+               console.log(data);
+              const apartmentsDict = {}
+              data.forEach(apartment => {
+              apartmentsDict[apartment._id] = apartment;
+               });
+              console.log("blaaaaaaaaaaaaaaa");
+              console.log(apartmentsDict);
+              for(var i = 0;i < data.length;i++){
+                  this.dataArray.push({city: data[i]._id, sublets: data[i].count})
+                }
 
-          });
-          Object.keys(this.data).forEach(city => {
-            this.dataArray.push({city: city, sublets: this.data[city]})
-          });
-          Object.keys(this.secondGraphData).forEach(numberOfRooms => {
-            this.secondGraphDataArray.push({numOfRooms: parseInt(numberOfRooms), amountOfSublets: this.secondGraphData[numberOfRooms]})
-          });
-          // sort the data
-          this.dataArray = this.dataArray.sort(function (b, a) {
-            return a.sublets - b.sublets;
-          });
           this.svg = d3.select("#firstGraph")
             .append("svg")
             .attr("width", this.width + this.margin.left + this.margin.right)

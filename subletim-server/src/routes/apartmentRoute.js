@@ -15,6 +15,27 @@ router.get('/apartments', function(req, res, next){
     });
 });
 
+router.get('/groupByApartment', function(req, res, next){
+    console.log('--test group by start--')
+    db.apartmentsCollection.aggregate(( [ { $group : { _id : "$city" ,count:{$sum:1}} } ] ),
+        function(err, groups){
+            if(err){
+                res.send(err);
+            }
+            res.json(groups);
+            console.log(groups)
+        });});
+
+router.get('/MapReduceApartment', function(req, res, next){
+    console.log('---- test -----')
+    let m = function() {
+        emit(this.roomNumber,1)}
+    let r = function (k,v) {
+        return Array.sum(v);}
+    var res = db.apartmentsCollection.mapReduce(m,r,{ out: "map_reduce_example" })
+    console.log(res);
+});
+
 // Get Single apartments
 router.get('/apartments/:id', function(req, res, next){
     db.apartmentsCollection.findOne({_id: mongojs.ObjectId(req.params.id)}, function(err, apartment){
