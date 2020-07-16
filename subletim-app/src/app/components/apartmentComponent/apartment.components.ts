@@ -22,7 +22,7 @@ export class ApartmentComponents {
   ) {
     this.currentUser = this.authenticationService.currentUserValue;
     this.isAdmin()
-    if(this.isAdmin()) {
+    if(this.currentUser.isAdmin) {
       this.apartmentService.getApartments()
         .subscribe(apartments => {
           this.userService.getUsers().subscribe(users => {
@@ -39,14 +39,13 @@ export class ApartmentComponents {
         });
     }
     else{
-      this.apartmentService.getUserApartments(this.currentUser)
+      this.apartmentService.getUserApartments(this.currentUser._id)
         .subscribe(apartments => {
           this.userService.getUsers().subscribe(users => {
             const usersDict = {};
             users.forEach(user => {
               usersDict[user._id] = user;
             });
-            console.log(usersDict)
             apartments.forEach(apartment => {
               apartment.owner = usersDict[apartment.owner]
             });
@@ -96,8 +95,9 @@ editApartment(apartment){
     let city = (<HTMLInputElement>document.getElementById("cityTxt")).value
     let address = (<HTMLInputElement>document.getElementById("addressTxt")).value
     let rooms = (<HTMLInputElement>document.getElementById("roomTxt")).value
-
-    this.apartmentService.searchApartment(city, address, rooms).subscribe(apartments => {
+    let currentUser = this.currentUser._id;
+    let isAdmin = this.currentUser.isAdmin;
+    this.apartmentService.searchApartment(city, address, rooms, currentUser, isAdmin).subscribe(apartments => {
       this.userService.getUsers().subscribe(users => {
         const usersDict = {};
         users.forEach(user => {

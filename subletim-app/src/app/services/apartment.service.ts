@@ -15,6 +15,7 @@ export class ApartmentService{
       .map(res => res.json());
   }
   getUserApartments(user){
+    console.log('service:' + user)
     var config = {params: {user:user}}
     return this.http.get('apartmentRoute/userApartments', config)
       .map(res => res.json());
@@ -37,9 +38,15 @@ export class ApartmentService{
       .map(res => res.json());
   }
 
-  searchApartment(city, address, rooms){
-    var config = {params: {city:city, address:address, rooms:rooms}}
-    return this.http.get('apartmentRoute/searchApartments',  config)
-      .map(res => res.json());
+  searchApartment(city, address, rooms, currentUser, isAdmin){
+    let config = {params: {city:city, address:address, rooms:rooms, currentUser:currentUser}}
+    if(isAdmin) {
+      return this.http.get('apartmentRoute/searchApartments', config)
+        .map(res => res.json());
+    }
+    else {
+      return this.http.get('apartmentRoute/searchApartmentsNotAdmin', config)
+        .map(res => res.json());
+    }
   }
 }

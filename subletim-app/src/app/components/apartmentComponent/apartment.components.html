@@ -17,7 +17,7 @@
     <th>Address</th>
     <th>City</th>
     <th>Room Number</th>
-    <th>Owner</th>
+    <th  *ngIf="isAdminUser">Owner</th>
     <th *ngIf="isAdminUser">Owner Phone Number</th>
   </tr>
   <tr *ngFor="let apartment of apartments">
@@ -33,10 +33,10 @@
     <td>
       {{apartment.roomNumber}}
     </td>
-    <td>
+    <td *ngIf="isAdminUser">
       {{apartment.owner.firstName + " " + apartment.owner.lastName }}
     </td>
-    <td>
+    <td  *ngIf="isAdminUser">
       {{apartment.owner.phoneNumber}}
     </td>
     <td>
