@@ -81,7 +81,7 @@ export class addApartmentComponent {
       address: this.address,
       city: this.city,
       roomNumber: this.roomNumber,
-      owner: this.owner,
+      owner: this.currentUser,
     };
     await this.apartmentService.updateApartment(_apartment).subscribe();
   }

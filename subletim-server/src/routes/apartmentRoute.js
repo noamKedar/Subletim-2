@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var mongojs = require('mongojs');
+const objectId = require('mongoose').Types.ObjectId;
 
 var db = mongojs('subletimDB', ['apartmentsCollection']);
 var userDb = mongojs('subletimDB', ['usersCollection'])
@@ -83,6 +84,132 @@ router.put('/apartment/:id', function(req, res, next){
         });
     }
 });
+router.get('/userApartments', function(req, res, next) {
+    let id = req.query.user;
+
+    if (!req.query) {
+        res.status(400);
+        res.json({
+            "error": "Bad Data"
+        });
+    } else {
+        db.apartmentsCollection.find({owner: new objectId(id)}, function (err, apartments) {
+            if (err) {
+                res.send(err);
+            }
+            res.json(apartments);
+            console.log(apartments)
+        });
+    }
+});
+
+router.get('/searchApartmentsNotAdmin', function(req, res, next) {
+    let city = req.query.city;
+    let address = req.query.address;
+    let rooms = parseInt(req.query.rooms);
+    let cityNan = !city
+    let addressNan = !address;
+    let roomsNan = isNaN(rooms);
+    let currentUser = req.query.currentUser;
+    if (!req.query) {
+        res.status(400);
+        res.json({
+            "error": "Bad Data"
+        });
+    } else {
+        if (cityNan && addressNan && roomsNan) {
+            db.apartmentsCollection.find({owner: new objectId(currentUser)}, function (err, apartments) {
+                if (err) {
+                    res.send(err);
+                }
+                res.json(apartments);
+                console.log(apartments)
+            });
+        } else if (!cityNan && !addressNan && !roomsNan) {
+            db.apartmentsCollection.find({
+                owner: new objectId(currentUser),
+                city: city,
+                address: address,
+                roomNumber: rooms
+            }, function (err, apartments) {
+                if (err) {
+                    res.send(err);
+                }
+                res.json(apartments);
+                console.log(apartments)
+            });
+        } else if (!cityNan && addressNan && roomsNan) {
+            db.apartmentsCollection.find({
+                owner: new objectId(currentUser),
+                city: city
+            }, function (err, apartments) {
+                if (err) {
+                    res.send(err);
+                }
+                res.json(apartments);
+                console.log(apartments)
+            });
+        } else if (cityNan && !addressNan && roomsNan) {
+            db.apartmentsCollection.find({
+                owner: new objectId(currentUser),
+                address: address
+            }, function (err, apartments) {
+                if (err) {
+                    res.send(err);
+                }
+                res.json(apartments);
+                console.log(apartments)
+            });
+        } else if (cityNan && addressNan && !roomsNan) {
+            db.apartmentsCollection.find({
+                owner: new objectId(currentUser),
+                roomNumber: rooms
+            }, function (err, apartments) {
+                if (err) {
+                    res.send(err);
+                }
+                res.json(apartments);
+                console.log(apartments)
+            });
+        } else if (!cityNan && addressNan && !roomsNan) {
+            db.apartmentsCollection.find({
+                owner: new objectId(currentUser),
+                city: city,
+                roomNumber: rooms
+            }, function (err, apartments) {
+                if (err) {
+                    res.send(err);
+                }
+                res.json(apartments);
+                console.log(apartments)
+            });
+        } else if (!cityNan && !addressNan && roomsNan) {
+            db.apartmentsCollection.find({
+                owner: new objectId(currentUser),
+                city: city,
+                address: address
+            }, function (err, apartments) {
+                if (err) {
+                    res.send(err);
+                }
+                res.json(apartments);
+                console.log(apartments)
+            });
+        } else if (cityNan && !addressNan && !roomsNan) {
+            db.apartmentsCollection.find({
+                owner: new objectId(currentUser),
+                address: address,
+                roomNumber: rooms
+            }, function (err, apartments) {
+                if (err) {
+                    res.send(err);
+                }
+                res.json(apartments);
+                console.log(apartments)
+            });
+        }
+    }
+})
 
 router.get('/searchApartments', function(req, res, next) {
     let city = req.query.city;
@@ -91,7 +218,6 @@ router.get('/searchApartments', function(req, res, next) {
     let cityNan = !city
     let addressNan = !address;
     let roomsNan = isNaN(rooms);
-
     if (!req.query) {
         res.status(400);
         res.json({
