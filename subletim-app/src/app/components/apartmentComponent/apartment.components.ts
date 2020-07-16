@@ -22,20 +22,38 @@ export class ApartmentComponents {
   ) {
     this.currentUser = this.authenticationService.currentUserValue;
     this.isAdmin()
-    this.apartmentService.getApartments()
-      .subscribe(apartments => {
-        this.userService.getUsers().subscribe(users => {
-          const usersDict = {};
-          users.forEach(user => {
-            usersDict[user._id] = user;
+    if(this.isAdmin()) {
+      this.apartmentService.getApartments()
+        .subscribe(apartments => {
+          this.userService.getUsers().subscribe(users => {
+            const usersDict = {};
+            users.forEach(user => {
+              usersDict[user._id] = user;
+            });
+            console.log(usersDict)
+            apartments.forEach(apartment => {
+              apartment.owner = usersDict[apartment.owner]
+            });
+            this.apartments = apartments;
           });
-          console.log(usersDict)
-          apartments.forEach(apartment => {
-            apartment.owner = usersDict[apartment.owner]
-          });
-          this.apartments = apartments;
         });
-      });
+    }
+    else{
+      this.apartmentService.getUserApartments(this.currentUser)
+        .subscribe(apartments => {
+          this.userService.getUsers().subscribe(users => {
+            const usersDict = {};
+            users.forEach(user => {
+              usersDict[user._id] = user;
+            });
+            console.log(usersDict)
+            apartments.forEach(apartment => {
+              apartment.owner = usersDict[apartment.owner]
+            });
+            this.apartments = apartments;
+          });
+        });
+    }
   }
 
   addNewApartment() {

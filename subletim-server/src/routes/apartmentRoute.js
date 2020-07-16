@@ -83,7 +83,23 @@ router.put('/apartment/:id', function(req, res, next){
         });
     }
 });
-
+router.get('/userApartments', function(req, res, next) {
+    let user = req.query.address;
+    if (!req.query) {
+        res.status(400);
+        res.json({
+            "error": "Bad Data"
+        });
+    } else {
+        db.apartmentsCollection.find({owner:user}, function (err, apartments) {
+            if (err) {
+                res.send(err);
+            }
+            res.json(apartments);
+            console.log(apartments)
+        });
+    }
+});
 router.get('/searchApartments', function(req, res, next) {
     let city = req.query.city;
     let address = req.query.address;

@@ -70,8 +70,13 @@ const user2 = new UserModel({ _id : new ObjectID, firstName: "Michal", lastName:
 const user3 = new UserModel({ _id : new ObjectID, firstName: "Noam", lastName: "Kedar", email: "noam@gmail.com",
     userName: "noamked", phoneNumber: "0501234567", password: "123456", isAdmin: true
 });
-
-const usersArr = [user1, user2, user3]
+const user4 = new UserModel({ _id : new ObjectID, firstName: "testFirst", lastName: "testLast", email: "test1@gmail.com",
+    userName: "testUN", phoneNumber: "0546372283", password: "123456", isAdmin: false
+});
+const user5 = new UserModel({ _id : new ObjectID, firstName: "testUser", lastName: "testUserLast", email: "test2@gmail.com",
+    userName: "testUN2", phoneNumber: "0523465730", password: "123456", isAdmin: false
+});
+const usersArr = [user1, user2, user3, user4, user5]
 insertToDB("usersCollection", "users", usersArr);
 
 const apartment1 = new ApartmentModel({_id : new ObjectID, apartmentName: "Great Apartment", city:"Tel Aviv", address: "Rotschild 1",
@@ -83,8 +88,14 @@ const apartment2 = new ApartmentModel({_id : new ObjectID, apartmentName: "Cool 
 const apartment3 = new ApartmentModel({_id : new ObjectID, apartmentName: "Beautiful Apartment", city:"Tel Aviv", address: "Rotschild 3",
     owner: user3._id, roomNumber: 5
 });
+const apartment4 = new ApartmentModel({_id : new ObjectID, apartmentName: "Amazing Apartment", city:"Jerusalem", address: "Rotschild 4",
+    owner: user4._id, roomNumber: 3
+});
+const apartment5 = new ApartmentModel({_id : new ObjectID, apartmentName: "Cute Apartment", city:"Jerusalem", address: "Rotschild 5",
+    owner: user4._id, roomNumber: 6
+});
 
-const apartmentsArr = [apartment1, apartment2, apartment3];
+const apartmentsArr = [apartment1, apartment2, apartment3, apartment4, apartment5];
 insertToDB("apartmentsCollection", "apartments", apartmentsArr);
 
 const sublet1 = new SubletModel({_id : new ObjectID, subletName: "Best sublet", startDate: new Date("2020-08-02"),
