@@ -5,7 +5,7 @@ export class Sublet {
   startDate: Date;
   endDate: Date;
   price: number;
-  apartment: string;
+  //apartment: string;
   _id?: string;
   apartmentObject: Apartment;
 }

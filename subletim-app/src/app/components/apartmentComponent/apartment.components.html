@@ -18,6 +18,7 @@
     <th>City</th>
     <th>Room Number</th>
     <th>Owner</th>
+    <th *ngIf="isAdminUser">Owner Phone Number</th>
   </tr>
   <tr *ngFor="let apartment of apartments">
     <td>
@@ -33,7 +34,10 @@
       {{apartment.roomNumber}}
     </td>
     <td>
-      {{apartment.owner}}
+      {{apartment.owner.firstName + " " + apartment.owner.lastName }}
+    </td>
+    <td>
+      {{apartment.owner.phoneNumber}}
     </td>
     <td>
       <img src="../../../assets/pencil.svg" (click)="editApartment(apartment)" class="icon">
@@ -41,5 +45,8 @@
     </td>
   </tr>
 </table>
+  <div>
+    <img src="../../../assets/home.svg" (click)="returnToMainPage()" class="home-icon">
+  </div>
 </div>
 <add-apartment *ngIf="createOrEdit" [createOrEdit]="createOrEdit" [apartmentToEdit]="apartmentToEdit" (createOrEditChange)="finishedAddingOrCreate()"></add-apartment>

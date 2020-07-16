@@ -1,7 +1,9 @@
-import {Component} from "@angular/core";
+import {Component, Output, EventEmitter} from "@angular/core";
 import {ApartmentService} from '../../services/apartment.service'
 import {Apartment} from './apartment'
-
+import {User} from "../user/user";
+import {AuthenticationService} from "../../services/authentication.service";
+import {UserService} from "../../services/user.service";
 @Component({
   selector: 'apartment',
   templateUrl: 'apartment.components.html',
@@ -11,14 +13,28 @@ import {Apartment} from './apartment'
 
 export class ApartmentComponents {
   apartments: Apartment[];
-  apartmentsWithoutSearch: Apartment[];
+  currentUser: User;
   apartmentToEdit: number;
   createOrEdit: boolean = false;
-
-  constructor(private apartmentService: ApartmentService) {
+  isAdminUser: boolean = false;
+  @Output() showApartments = new EventEmitter<boolean>();
+  constructor(private apartmentService: ApartmentService, private userService: UserService, private authenticationService: AuthenticationService,
+  ) {
+    this.currentUser = this.authenticationService.currentUserValue;
+    this.isAdmin()
     this.apartmentService.getApartments()
       .subscribe(apartments => {
-        this.apartments = apartments;
+        this.userService.getUsers().subscribe(users => {
+          const usersDict = {};
+          users.forEach(user => {
+            usersDict[user._id] = user;
+          });
+          console.log(usersDict)
+          apartments.forEach(apartment => {
+            apartment.owner = usersDict[apartment.owner]
+          });
+          this.apartments = apartments;
+        });
       });
   }
 
@@ -63,10 +79,24 @@ editApartment(apartment){
     let address = (<HTMLInputElement>document.getElementById("addressTxt")).value
     let rooms = (<HTMLInputElement>document.getElementById("roomTxt")).value
 
-    let res = this.apartmentService.searchApartment(city, address, rooms).subscribe(apartments => {
-      this.apartmentsWithoutSearch = this.apartments;
-      this.apartments = apartments;
+    this.apartmentService.searchApartment(city, address, rooms).subscribe(apartments => {
+      this.userService.getUsers().subscribe(users => {
+        const usersDict = {};
+        users.forEach(user => {
+          usersDict[user._id] = user;
+        });
+        apartments.forEach(apartment => {
+          apartment.owner = usersDict[apartment.owner]
+        });
+        this.apartments = apartments;
+      });
     });
   }
+  isAdmin() {
+      this.isAdminUser = this.currentUser.isAdmin;
+  }
 
+  returnToMainPage() {
+    this.showApartments.emit(false);
+  }
 }

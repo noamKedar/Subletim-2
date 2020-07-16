@@ -19,6 +19,7 @@ export class MainPageComponent {
   adminPage: boolean = false;
   editUser: boolean = false;
   currentUser: User;
+  viewApartments: boolean = false;
   @Output() showLoginChange = new EventEmitter<boolean>();
 
   constructor(
@@ -53,6 +54,10 @@ export class MainPageComponent {
 
   toggleEditPage(){
     this.editUser = !this.editUser;
+  }
+
+  toggleApartments() {
+    this.viewApartments = !this.viewApartments;
   }
 }
 

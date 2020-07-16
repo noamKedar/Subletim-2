@@ -16,14 +16,17 @@
     <label for="roomNumber" class="input-title">ROOM NUMBER</label>
     <input type="number" [(ngModel)]="roomNumber" name="roomNumber" class="form-control" placeholder="Enter Number Of Rooms">
   </div>
+  <!--
   <div class="form-group">
     <label for="owner" class="input-title">OWNER</label>
     <input type="text" [(ngModel)]="owner" name="owner" class="form-control" placeholder="Apartment Owner">
   </div>
+  -->
   <button type="submit" class="btn btn-success button" [disabled]="!valid()">Submit</button>
+
+  <div>
+    <img src="../../../assets/home.svg" (click)="returnToMainPage()" class="home-icon">
+  </div>
+
 </form>
 
-
-<div>
-  <img src="../../../assets/home.svg" (click)="returnToMainPage()" class="home-icon">
-</div>

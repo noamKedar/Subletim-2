@@ -3,7 +3,7 @@ var router = express.Router();
 var mongojs = require('mongojs');
 
 var db = mongojs('subletimDB', ['apartmentsCollection']);
-
+var userDb = mongojs('subletimDB', ['usersCollection'])
 // Get All Apartments
 router.get('/apartments', function(req, res, next){
     db.apartmentsCollection.find(function(err, apartments){
@@ -184,5 +184,6 @@ router.get('/searchApartments', function(req, res, next) {
         }
     }
 })
+
 
 module.exports = router;
