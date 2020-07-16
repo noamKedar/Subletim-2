@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, Type} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {UserService} from "../../services/user.service";
 import {AuthenticationService} from "../../services/authentication.service";
@@ -19,9 +19,12 @@ export class UpdateUserComponent implements OnInit {
   phoneNumber: number;
   password: string = "";
   @Output() showEditUserChange = new EventEmitter<boolean>();
+  @Output() createOrEditChange = new EventEmitter<boolean>();
   cancel: boolean = false;
   editUser: boolean = false;
   private user: any;
+  @Input() createOrEdit;
+  @Input() userToEdit;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -34,7 +37,7 @@ export class UpdateUserComponent implements OnInit {
       firstName: [this.user.firstName, Validators.required],
       lastName: [this.user.lastName, Validators.required],
       email: [this.user.email, Validators.required],
-      phoneNumber: [this.user.phoneNumber, Validators.required],
+      phoneNumber: [this.user.phoneNumber, [Validators.required, Validators.pattern("^[0-9]*$")]],
       password: [this.user.password, Validators.required],
       userName: [{value: this.user.userName, disabled: true}]
     });
@@ -42,7 +45,9 @@ export class UpdateUserComponent implements OnInit {
 
   async updateUser() {
     this.submitted = true;
-    await this.innerUpdate()
+    if (!this.updateForm.invalid){
+      await this.innerUpdate()
+    }
   }
 
   innerUpdate() {
@@ -60,7 +65,9 @@ export class UpdateUserComponent implements OnInit {
   }
 
   valid() {
-    return (!this.updateForm.invalid);
+    var formVal = this.updateForm.value;
+    return ( formVal.firstName  && formVal.lastName
+      && formVal.password && formVal.phoneNumber && formVal.email);
   }
 
   toggleCancel() {
