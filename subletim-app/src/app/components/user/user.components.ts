@@ -1,55 +1,56 @@
-import {Component} from '@angular/core';
+import {Component, EventEmitter, Output} from '@angular/core';
 import {UserService} from '../../services/user.service';
 import {User} from './user';
+import {first} from "rxjs/operators";
+import {AuthenticationService} from "../../services/authentication.service";
 
 @Component({
   selector: 'user',
-  templateUrl: 'user.components.html'
+  templateUrl: 'user.components.html',
+  providers: [UserService],
+  styleUrls: ['./user.component.css']
 })
 export class UserComponent {
   users: User[];
-  firstName: string;
-  lastName: string;
-  email: string;
-  userName: string;
-  phoneNumber: string;
-  password: string;
+  currentUser: User;
+  @Output() showUserChange = new EventEmitter<boolean>();
 
-  constructor(private userService: UserService) {
+  constructor(private userService: UserService, private authenticationService: AuthenticationService) {
+    this.currentUser = authenticationService.currentUserValue;
     this.userService.getUsers()
       .subscribe(users => {
         this.users = users;
       });
   }
 
-  addUser(event) {
-    event.preventDefault();
-    var newUser = {
-      firstName: this.firstName,
-      lastName: this.lastName,
-      email: this.email,
-      userName: this.userName,
-      phoneNumber: this.phoneNumber,
-      password: this.password
-    }
-    this.userService.addUser(newUser)
-      .subscribe(user => {
-        this.users.push(user);
-      });
+  deleteUser(id: number) {
+    this.userService.deleteUser(id)
+      .pipe(first())
+      .subscribe(() => this.loadAllUsers());
   }
 
-  deleteUser(id) {
-    var users = this.users;
-    this.userService.deleteUser(id).subscribe(data => {
-      if (data.n == 1) {
-        for (var i = 0; i < users.length; i++) {
-          if (users[i]._id == id) {
-            users.splice(i, 1);
-          }
-        }
-      }
+  private loadAllUsers() {
+    this.userService.getUsers()
+      .pipe(first())
+      .subscribe(users => this.users = users);
+  }
+
+  searchUser(){
+    let userName = (<HTMLInputElement>document.getElementById("userName")).value
+    let phoneNumber = (<HTMLInputElement>document.getElementById("phone")).value
+    let email = (<HTMLInputElement>document.getElementById("email")).value
+
+    let res = this.userService.searchUser(userName, phoneNumber, email).subscribe(users => {
+      this.users = users;
     });
+
+  }
+  returnToMainPage() {
+    this.showUserChange.emit(false);
   }
 
+  isNotCurrentUser(user: User) {
+    return user.userName != this.currentUser.userName;
+  }
 }
 

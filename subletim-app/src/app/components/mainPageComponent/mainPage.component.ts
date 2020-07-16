@@ -16,7 +16,7 @@ export class MainPageComponent {
   searchSublet: boolean = false;
   addApartment: boolean = false;
   logoutUser: boolean = false;
-  adminPage: boolean = false;
+  users: boolean = false;
   editUser: boolean = false;
   currentUser: User;
   viewApartments: boolean = false;
@@ -45,7 +45,7 @@ export class MainPageComponent {
   }
 
   toggleAdminPage() {
-    this.adminPage = !this.adminPage;
+    this.users = !this.users;
   }
 
   isAdmin(){

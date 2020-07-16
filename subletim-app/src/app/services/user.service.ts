@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Http, Headers} from '@angular/http';
 import 'rxjs/add/operator/map';
+import {HttpParams} from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root',
@@ -25,4 +26,9 @@ export class UserService{
       .map(res => res.json());
   }
 
+  searchUser(userName, phoneNumber, email){
+    var config = {params: {userName:userName, phoneNumber:phoneNumber, email:email}}
+    return this.http.get('userRoute/searchUser',  config)
+      .map(res => res.json());
+  }
 }

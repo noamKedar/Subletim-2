@@ -22,6 +22,7 @@
 }
 
 .hi-user {
+  float: left;
   margin: 5px;
   display: inline-block;
 }
@@ -30,4 +31,16 @@
   position: absolute;
 }
 
+.top-buttons {
+  float:left;
+  margin-right: 5px;
+  background-color: darkgray;
+  color: white;
+  height: 35px;
+  border-radius: 6px;
+  font-weight: bold;
+  font-size: 14px;
+  border-color: transparent;
+
+}
 

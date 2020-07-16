@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {ApartmentService} from "../../services/apartment.service";
-import {Apartment} from "../apartmentComponent/apartment";
+import {FormControl} from "@angular/forms";
 import {User} from "../user/user";
 import {AuthenticationService} from "../../services/authentication.service";
 

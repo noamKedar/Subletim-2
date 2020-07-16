@@ -99,4 +99,95 @@ router.post('/user/register', function (req, res, next) {
         }
     });
 });
+
+
+router.get('/searchUser', function(req, res, next) {
+    let userName = req.query.userName;
+    let phoneNumber = req.query.phoneNumber;
+    let email = req.query.email;
+
+    if (!req.query) {
+        res.status(400);
+        res.json({
+            "error": "Bad Data"
+        });
+    } else {
+        if (!userName && !phoneNumber && !email) {
+            db.usersCollection.find({}, function (err, users) {
+                if (err) {
+                    res.send(err);
+                }
+                res.json(users);
+            });
+        } else if (userName && phoneNumber && email) {
+            db.usersCollection.find({
+                userName: {'$regex': userName},
+                phoneNumber: {'$regex': phoneNumber},
+                email: {'$regex': email}
+            }, function (err, users) {
+                if (err) {
+                    res.send(err);
+                }
+                res.json(users);
+            });
+        } else if (userName && !phoneNumber && !email) {
+            db.usersCollection.find({
+                userName: {'$regex': userName}
+                }, function (err, users) {
+                if (err) {
+                    res.send(err);
+                }
+                res.json(users);
+            });
+        } else if (!userName && phoneNumber && !email) {
+            db.usersCollection.find({
+                phoneNumber: {'$regex': phoneNumber}
+            }, function (err, users) {
+                if (err) {
+                    res.send(err);
+                }
+                res.json(users);
+            });
+        } else if (!userName && !phoneNumber && email) {
+            db.usersCollection.find({
+                email: {'$regex': email}
+            }, function (err, users) {
+                if (err) {
+                    res.send(err);
+                }
+                res.json(users);
+            });
+        } else if (userName && phoneNumber && !email) {
+            db.usersCollection.find({
+                userName: {'$regex': userName},
+                phoneNumber: {'$regex': phoneNumber}
+            }, function (err, users) {
+                if (err) {
+                    res.send(err);
+                }
+                res.json(users);
+            });
+        } else if (userName && !phoneNumber && email) {
+            db.usersCollection.find({
+                userName: {'$regex': userName},
+                email: {'$regex': email}
+            }, function (err, users) {
+                if (err) {
+                    res.send(err);
+                }
+                res.json(users);
+            });
+        } else if (!userName && phoneNumber && email) {
+            db.usersCollection.find({
+                phoneNumber: {'$regex': phoneNumber},
+                email: {'$regex': email}
+            }, function (err, users) {
+                if (err) {
+                    res.send(err);
+                }
+                res.json(users);
+            });
+        }
+    }
+})
 module.exports = router;

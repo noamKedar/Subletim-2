@@ -35,7 +35,7 @@ export class RegisterComponent implements OnInit {
       lastName: ['', Validators.required],
       email: ['', Validators.required],
       userName: ['', Validators.required],
-      phoneNumber: ['', Validators.required],
+      phoneNumber: ['', [Validators.required, Validators.pattern("^[0-9]*$")]],
       password: ['', Validators.required],
       isAdmin: ['false']
     });
@@ -46,7 +46,9 @@ export class RegisterComponent implements OnInit {
     if (this.user) {
       this.user.clean
     }
-    await this.innerRegister()
+    if (!this.registerForm.invalid){
+      await this.innerRegister()
+    }
   }
 
   innerRegister() {
@@ -64,7 +66,9 @@ export class RegisterComponent implements OnInit {
   }
 
   valid() {
-    return (!this.registerForm.invalid);
+    var formVal = this.registerForm.value;
+    return (formVal.userName && formVal.firstName && formVal.lastName
+    && formVal.password && formVal.phoneNumber && formVal.email);
   }
 
   toggleCancel() {
