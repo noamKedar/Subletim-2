@@ -1,8 +1,10 @@
+import {User} from "../user/user";
+
 export class Apartment{
-  _id: object;
+  _id?: string;
   apartmentName: string;
   address: string;
   city: string;
-  owner: string;
+  owner: User;
   roomNumber: number;
 }

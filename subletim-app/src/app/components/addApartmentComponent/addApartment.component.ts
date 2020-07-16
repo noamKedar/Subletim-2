@@ -1,6 +1,8 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {ApartmentService} from "../../services/apartment.service";
 import {Apartment} from "../apartmentComponent/apartment";
+import {User} from "../user/user";
+import {AuthenticationService} from "../../services/authentication.service";
 
 @Component({
   selector: 'add-apartment',
@@ -13,8 +15,10 @@ export class addApartmentComponent {
   apartmentName: string = "";
   address: string = "";
   city: string = "";
-  owner: string = "";
+  //owner: string = "";
+  owner: User;
   roomNumber: number;
+  currentUser: User;
 
   @Input() apartmentToEdit;
   @Output() apartmentToEditChange = new EventEmitter<boolean>();
@@ -22,8 +26,11 @@ export class addApartmentComponent {
   @Output() createOrEditChange = new EventEmitter<boolean>();
   @Output() showAddApartmentChange = new EventEmitter<boolean>();
 
-  constructor(private apartmentService:ApartmentService) {
+  constructor(private apartmentService:ApartmentService,
+    private authenticationService: AuthenticationService) {
+    this.currentUser = this.authenticationService.currentUserValue;
   }
+
 
   ngOnInit() {
     if (this.apartmentToEdit) {
@@ -53,7 +60,8 @@ export class addApartmentComponent {
       address: this.address,
       city: this.city,
       roomNumber: this.roomNumber,
-      owner: this.owner
+      //owner: this.owner
+      owner:this.currentUser
     };
 
     this.apartmentService.addApartment(newApartment)
@@ -62,7 +70,7 @@ export class addApartmentComponent {
         this.address = '';
         this.city = '';
         this.roomNumber = 0;
-        this.owner = '';
+        //this.owner = '';
       });
   }
 
@@ -79,7 +87,7 @@ export class addApartmentComponent {
   }
 
   valid() {
-    return (this.apartmentName && this.address && this.city && this.roomNumber && this.owner);
+    return (this.apartmentName && this.address && this.city && this.roomNumber); //&& this.owner);
   }
 
   returnToMainPage() {

@@ -1,9 +1,10 @@
-<div *ngIf="!editUser && !adminPage && !addApartment && !searchSublet && !addSublet && !logoutUser" class="main-page">
+<div *ngIf="!editUser && !adminPage && !addApartment && !searchSublet && !addSublet && !logoutUser && !viewApartments" class="main-page">
   <div class="left">
     <h2 class="hi-user">Hi {{currentUser.firstName}}!</h2>
     <button (click)="toggleLogoutUser()" class="main-buttons position-absolute">Logout</button>
     <button *ngIf="isAdmin() == true" (click)="toggleAdminPage()" class="main-buttons">Admin Page</button>
     <button (click)="toggleEditPage()" class="main-buttons">Settings</button>
+    <button (click)="toggleLogoutUser()" class="main-buttons position-absolute">Logout</button>
   </div>
   <div>
     <img src="../../../assets/logo.svg">
@@ -14,6 +15,8 @@
   <button (click)="toggleSearchSublet()" class="main-buttons"> Search Sublet </button>
 
   <button (click)="toggleAddApartment()" class="main-buttons"> Add Apartment </button>
+
+    <button (click)="toggleApartments()" class="main-buttons position-absolute">View Apartments</button>
   </div>
 
   <graphs></graphs>
@@ -26,3 +29,4 @@
 <login *ngIf="logoutUser" (showLoginChange)="logoutUser = !logoutUser"></login>
 <admin *ngIf="adminPage" (showAdminPageChange)="adminPage = !adminPage"></admin>
 <update-user *ngIf="editUser" (showEditUserChange)="editUser = !editUser"></update-user>
+<apartment *ngIf="viewApartments" (showApartments)="viewApartments = !viewApartments"></apartment>

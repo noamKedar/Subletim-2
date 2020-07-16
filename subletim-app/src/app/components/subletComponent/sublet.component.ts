@@ -3,6 +3,7 @@ import {SubletService} from "../../services/sublet.service";
 import {Sublet} from "./sublet";
 import {ApartmentService} from "../../services/apartment.service";
 import 'rxjs/add/operator/map';
+import {BehaviorSubject} from "rxjs";
 
 @Component({
   selector: 'sublets',
@@ -13,12 +14,12 @@ import 'rxjs/add/operator/map';
 
 export class SubletsComponent {
   sublets: Sublet[];
-  subletsWithoutSearch: Sublet[];
   subletToEdit: number;
   createOrEdit: boolean = false;
   @Output() showSubletsListChange = new EventEmitter<boolean>();
 
   constructor(private subletService:SubletService, private apartmentService: ApartmentService) {
+
     this.subletService.getSublets()
       .subscribe(sublets => {
         this.apartmentService.getApartments().subscribe(apartments => {
@@ -78,9 +79,26 @@ export class SubletsComponent {
     let endDate = (<HTMLInputElement>document.getElementById("endDateTxt")).value
     let price = (<HTMLInputElement>document.getElementById("priceTxt")).value
 
-    let res = this.subletService.searchSublet(startDate, endDate, price).subscribe(sublets => {
-      this.subletsWithoutSearch = this.sublets;
-      this.sublets = sublets;
+    this.subletService.searchSublet(startDate, endDate, price).subscribe(sublets => {
+      console.log(sublets)
+      this.apartmentService.getApartments().subscribe(apartments => {
+        const apartmentsDict = {};
+        apartments.forEach(apartment => {
+          apartmentsDict[apartment._id] = apartment;
+          console.log(apartment._id)
+        });
+        console.log(apartmentsDict)
+        sublets.forEach(sublet => {
+          console.log(apartmentsDict)
+          console.log(sublet)
+          console.log(apartmentsDict[sublet.apartment])
+          sublet.apartmentObject = apartmentsDict[sublet.apartment]
+          console.log( sublet.apartmentObject)
+        });
+        console.log(sublets)
+        this.sublets = sublets;
+      });
     });
   }
+
 }

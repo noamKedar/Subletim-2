@@ -76,7 +76,12 @@ router.get('/searchSublets', function(req, res, next) {
     let sdNan = isNaN(startDate.getTime())
     let edNan = isNaN(endDate.getTime())
     let pNan = isNaN(price);
-
+    console.log(startDate)
+    console.log(endDate)
+    console.log(price)
+    console.log(sdNan)
+    console.log(edNan)
+    console.log(pNan)
     if (!req.query){
         res.status(400);
         res.json({
@@ -98,7 +103,7 @@ router.get('/searchSublets', function(req, res, next) {
                res.json(sublets);
                console.log(sublets)});
        }
-       else if (!sdNan && edNan  && price == pNan) {
+       else if (!sdNan && edNan  && pNan ) {
            db.subletimCollection.find({
                startDate: {$gte: startDate}
            }, function(err, sublets){
@@ -116,7 +121,7 @@ router.get('/searchSublets', function(req, res, next) {
                console.log(sublets)
            });
        }
-       else if (!sdNan && !edNan && price) {
+       else if (!sdNan && !edNan && pNan) {
            db.subletimCollection.find({
                startDate: {$gte: startDate},
                endDate: {$lte: endDate}
@@ -136,7 +141,7 @@ router.get('/searchSublets', function(req, res, next) {
                console.log(sublets)
            });
        }
-       else if (sdNan && !edNan && !p) {
+       else if (sdNan && !edNan && !pNan) {
            db.subletimCollection.find({
                endDate: {$lte: endDate},
                price:{$lte: price}
@@ -147,6 +152,7 @@ router.get('/searchSublets', function(req, res, next) {
            });
        }
        else if(!sdNan && !edNan && !pNan) {
+           console.log('here')
            db.subletimCollection.find({
                startDate: {$gte: startDate},
                endDate: {$lte: endDate},
