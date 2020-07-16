@@ -48,6 +48,7 @@ db.once("open", function() {
     console.log("Create Connection Successfully!");
 });
 
+
 const UserModel = mongoose.model("userModel",user , "usersCollection");
 const ApartmentModel = mongoose.model("apartmentModel",apartment , "apartmentsCollection");
 const SubletModel = mongoose.model("subletModel",sublet , "subletimCollection");
