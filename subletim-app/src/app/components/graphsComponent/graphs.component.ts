@@ -26,27 +26,18 @@ export class GraphsComponent {
   constructor(private subletService: SubletService, private apartmentService: ApartmentService) {
     this.subletService.getSublets()
       .subscribe(sublets => {
-        this.apartmentService.getApartments().subscribe(apartments => {
-          const apartmentsDict = {};
-          apartments.forEach(apartment => {
-            apartmentsDict[apartment._id] = apartment;
+        this.subletService.groupBySublet().subscribe(data => {
+          const subletsDict = {}
+          data.forEach(sublet => {
+            subletsDict[sublet._id] = sublet;
           });
-          sublets.forEach(sublet => {
-            sublet.apartmentObject = apartmentsDict[sublet.apartment];
-            this.data[sublet.apartmentObject.city] ? this.data[sublet.apartmentObject.city] += 1: this.data[sublet.apartmentObject.city] = 1;
-            this.secondGraphData[sublet.apartmentObject.roomNumber] ? this.secondGraphData[sublet.apartmentObject.roomNumber] += 1: this.secondGraphData[sublet.apartmentObject.roomNumber] = 1;
+          console.log(data)
+          for(let i = 0;i < data.length;i++){
+            console.log(data[i])
+            this.dataArray.push({city: data[i]._id, sublets: data[i].count})
+          }
 
-          });
-          Object.keys(this.data).forEach(city => {
-            this.dataArray.push({city: city, sublets: this.data[city]})
-          });
-          Object.keys(this.secondGraphData).forEach(numberOfRooms => {
-            this.secondGraphDataArray.push({numOfRooms: parseInt(numberOfRooms), amountOfSublets: this.secondGraphData[numberOfRooms]})
-          });
-          // sort the data
-          this.dataArray = this.dataArray.sort(function (b, a) {
-            return a.sublets - b.sublets;
-          });
+          //this.apartmentService.mapReduceApartments().subscribe(data => {})
           this.svg = d3.select("#firstGraph")
             .append("svg")
             .attr("width", this.width + this.margin.left + this.margin.right)
@@ -116,65 +107,65 @@ export class GraphsComponent {
             .attr("height", height + margin2.top + margin2.bottom)
             .append("g")
             .attr("transform", "translate(" + margin2.left + "," + margin2.top + ")");
-            // Add X axis
-            const x2 = d3.scaleLinear()
-              .domain([0, 10])
-              .range([0, width]);
-            svg2.append("g")
-              .attr("transform", "translate(0," + height + ")")
-              .call(d3.axisBottom(x2))
-              .selectAll("text")
-              .attr("transform", "translate(-10,0)rotate(-45)")
-              .style("text-anchor", "end");
-            // Y axis
-            var y2 = d3.scaleBand()
-              .domain(this.secondGraphDataArray.map(function (d) { return d.numOfRooms; }))
-              .range([0, height])
-              .padding(1);
-            svg2.append("g")
-              .call(d3.axisLeft(y2));
-            //lines
-            svg2.selectAll("myline")
-              .data(this.secondGraphDataArray)
-              .enter()
-              .append("line")
-              .attr("x1", function (d) { return x2(d.amountOfSublets); })
-              .attr("x2", x2(0))
-              .attr("y1", function (d) { return y2(d.numOfRooms); })
-              .attr("y2", function (d) { return y2(d.numOfRooms); })
-              .attr("stroke", "black")
-            // Circles
-            svg2.selectAll("mycircle")
-              .data(this.secondGraphDataArray)
-              .enter()
-              .append("circle")
-              .attr("cx", function (d) { return x2(d.amountOfSublets); })
-              .attr("cy", function (d) { return y2(d.numOfRooms); })
-              .attr("r", "6")
-              .style("fill", "#9de9de")
-              .attr("stroke", "black")
-            //add y-axis label
-            svg2.append("text")
-              .attr("transform", "rotate(-90)")
-              .attr("y", 0 - margin2.left)
-              .attr("x", 0 - (height / 2))
-              .attr("dy", "2em")
-              .style("font-size", "12px")
-              .style("text-anchor", "middle")
-              .text("Number Of Rooms");
-            // add x-axis label
-            svg2.append("text")
-              .attr("transform", "translate(" + (width / 2) + " ," + (height + this.margin.bottom - 15) + ")")
-              .style("text-anchor", "middle")
-              .text("Amount Of Sublets");
-            // add title to the graph
-            svg2.append("text")
-              .attr("x", (width / 2))
-              .attr("y", 0 - (this.margin.top / 2))
-              .attr("text-anchor", "middle")
-              .style("font-size", "16px")
-              .style("text-decoration", "underline")
-              .text("Amount Of Sublets By Number Of Rooms");
+          // Add X axis
+          const x2 = d3.scaleLinear()
+            .domain([0, 10])
+            .range([0, width]);
+          svg2.append("g")
+            .attr("transform", "translate(0," + height + ")")
+            .call(d3.axisBottom(x2))
+            .selectAll("text")
+            .attr("transform", "translate(-10,0)rotate(-45)")
+            .style("text-anchor", "end");
+          // Y axis
+          var y2 = d3.scaleBand()
+            .domain(this.secondGraphDataArray.map(function (d) { return d.numOfRooms; }))
+            .range([0, height])
+            .padding(1);
+          svg2.append("g")
+            .call(d3.axisLeft(y2));
+          //lines
+          svg2.selectAll("myline")
+            .data(this.secondGraphDataArray)
+            .enter()
+            .append("line")
+            .attr("x1", function (d) { return x2(d.amountOfSublets); })
+            .attr("x2", x2(0))
+            .attr("y1", function (d) { return y2(d.numOfRooms); })
+            .attr("y2", function (d) { return y2(d.numOfRooms); })
+            .attr("stroke", "black")
+          // Circles
+          svg2.selectAll("mycircle")
+            .data(this.secondGraphDataArray)
+            .enter()
+            .append("circle")
+            .attr("cx", function (d) { return x2(d.amountOfSublets); })
+            .attr("cy", function (d) { return y2(d.numOfRooms); })
+            .attr("r", "6")
+            .style("fill", "#9de9de")
+            .attr("stroke", "black")
+          //add y-axis label
+          svg2.append("text")
+            .attr("transform", "rotate(-90)")
+            .attr("y", 0 - margin2.left)
+            .attr("x", 0 - (height / 2))
+            .attr("dy", "2em")
+            .style("font-size", "12px")
+            .style("text-anchor", "middle")
+            .text("Number Of Rooms");
+          // add x-axis label
+          svg2.append("text")
+            .attr("transform", "translate(" + (width / 2) + " ," + (height + this.margin.bottom - 15) + ")")
+            .style("text-anchor", "middle")
+            .text("Amount Of Sublets");
+          // add title to the graph
+          svg2.append("text")
+            .attr("x", (width / 2))
+            .attr("y", 0 - (this.margin.top / 2))
+            .attr("text-anchor", "middle")
+            .style("font-size", "16px")
+            .style("text-decoration", "underline")
+            .text("Amount Of Sublets By Number Of Rooms");
 
         });
       })
