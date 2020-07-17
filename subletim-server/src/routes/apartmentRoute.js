@@ -1,12 +1,12 @@
-var express = require('express');
-var router = express.Router();
-var mongojs = require('mongojs');
+const express = require('express');
+const router = express.Router();
+const mongojs = require('mongojs');
 const objectId = require('mongoose').Types.ObjectId;
 
-var db = mongojs('subletimDB', ['apartmentsCollection']);
-var userDb = mongojs('subletimDB', ['usersCollection'])
+const db = mongojs('subletimDB', ['apartmentsCollection']);
+
 // Get All Apartments
-router.get('/apartments', function(req, res, next){
+router.get('/apartments', function(req, res){
     db.apartmentsCollection.find(function(err, apartments){
         if(err){
             res.send(err);
@@ -15,29 +15,25 @@ router.get('/apartments', function(req, res, next){
     });
 });
 
-router.get('/groupByApartment', function(req, res, next){
-    console.log('--test group by start--')
-    db.apartmentsCollection.aggregate(( [ { $group : { _id : "$city" ,count:{$sum:1}} } ] ),
-        function(err, groups){
-            if(err){
-                res.send(err);
-            }
-            res.json(groups);
-            console.log(groups)
-        });});
-
-router.get('/MapReduceApartment', function(req, res, next){
+router.get('/mapReduceApartment', function(req, res){
     console.log('---- test -----')
-    let m = function() {
-        emit(this.roomNumber,1)}
-    let r = function (k,v) {
-        return Array.sum(v);}
-    var res = db.apartmentsCollection.mapReduce(m,r,{ out: "map_reduce_example" })
+    let m = function() { emit(this.roomNumber,1)}
+    let r = function (k,v) { return Array.sum(v);}
+    console.log('---- test 2-----' + m + '-------' + r)
+    var res = db.apartmentsCollection.mapReduce((m,r,{ out: "map_reduce_example" }),
+        function(err, mr){
+        if(err){
+            console.log('error here')
+            res.send(err);
+        }
+        res.json(mr);
+        console.log(mr)
+    });
     console.log(res);
 });
 
 // Get Single apartments
-router.get('/apartments/:id', function(req, res, next){
+router.get('/apartments/:id', function(req, res){
     db.apartmentsCollection.findOne({_id: mongojs.ObjectId(req.params.id)}, function(err, apartment){
         if(err){
             res.send(err);
@@ -47,7 +43,7 @@ router.get('/apartments/:id', function(req, res, next){
 });
 
 //Save Apartment
-router.post('/apartment', function(req, res, next){
+router.post('/apartment', function(req, res){
         db.apartmentsCollection.save(apartment, function(err, apartment){
             if(err){
                 res.send(err);
@@ -57,7 +53,7 @@ router.post('/apartment', function(req, res, next){
 });
 
 // Delete Task
-router.delete('/apartment/:id', function(req, res, next){
+router.delete('/apartment/:id', function(req, res){
     db.apartmentsCollection.remove({_id: mongojs.ObjectId(req.params.id)}, function(err, apartment){
         if(err){
             res.send(err);
@@ -68,8 +64,8 @@ router.delete('/apartment/:id', function(req, res, next){
 
 // Update Apartment
 router.put('/apartment/:id', function(req, res, next){
-    var apartment = req.body;
-    var updApartment = {};
+    let apartment = req.body;
+    let updApartment = {};
 
     if(apartment.apartmentName){
         updApartment.apartmentName = apartment.apartmentName;
@@ -331,6 +327,5 @@ router.get('/searchApartments', function(req, res, next) {
         }
     }
 })
-
 
 module.exports = router;

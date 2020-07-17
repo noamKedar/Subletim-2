@@ -69,6 +69,18 @@ router.put('/sublet/:id', function(req, res, next) {
     }
 });
 
+router.get('/groupBySublet', function(req, res){
+    console.log('group by sublet')
+    console.log(res)
+    db.subletimCollection.aggregate(( [ { $group : { _id : "$apartment.city" ,count:{$sum:1}} } ] ),
+        function(err, groups){
+            if(err){
+                res.send(err);
+            }
+            res.json(groups);
+            console.log(groups)
+        });});
+
 router.get('/searchSublets', function(req, res, next) {
     let startDate = new Date(req.query.startDate);
     let endDate = new Date(req.query.endDate);
@@ -76,12 +88,7 @@ router.get('/searchSublets', function(req, res, next) {
     let sdNan = isNaN(startDate.getTime())
     let edNan = isNaN(endDate.getTime())
     let pNan = isNaN(price);
-    console.log(startDate)
-    console.log(endDate)
-    console.log(price)
-    console.log(sdNan)
-    console.log(edNan)
-    console.log(pNan)
+
     if (!req.query){
         res.status(400);
         res.json({

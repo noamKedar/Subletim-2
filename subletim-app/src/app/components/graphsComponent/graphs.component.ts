@@ -26,18 +26,20 @@ export class GraphsComponent {
   constructor(private subletService: SubletService, private apartmentService: ApartmentService) {
     this.subletService.getSublets()
       .subscribe(sublets => {
-        this.apartmentService.groupByApartment().subscribe(data => {
-               console.log(data);
-              const apartmentsDict = {}
-              data.forEach(apartment => {
-              apartmentsDict[apartment._id] = apartment;
+        this.subletService.groupSublet().subscribe(data => {
+              const subletsDict = {}
+              data.forEach(sublet => {
+              subletsDict[sublet._id] = sublet;
                });
-              console.log("blaaaaaaaaaaaaaaa");
-              console.log(apartmentsDict);
-              for(var i = 0;i < data.length;i++){
+              console.log(data)
+              for(let i = 0;i < data.length;i++){
+                console.log(data[i])
                   this.dataArray.push({city: data[i]._id, sublets: data[i].count})
                 }
 
+          this.apartmentService.mapReduceApartments().subscribe(data => {
+
+          })
           this.svg = d3.select("#firstGraph")
             .append("svg")
             .attr("width", this.width + this.margin.left + this.margin.right)

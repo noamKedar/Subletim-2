@@ -29,7 +29,10 @@ export class SubletService{
     return this.http.delete('subletRoute/sublet/'+id)
       .map(res => res.json());
   }
-
+  groupSublet() {
+    return this.http.get('subletRoute/groupBySublet')
+      .map(res => res.json());
+  }
   updateSublet(sublet) {
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');

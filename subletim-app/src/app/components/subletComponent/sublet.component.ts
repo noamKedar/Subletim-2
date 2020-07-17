@@ -80,22 +80,16 @@ export class SubletsComponent {
     let price = (<HTMLInputElement>document.getElementById("priceTxt")).value
 
     this.subletService.searchSublet(startDate, endDate, price).subscribe(sublets => {
-      console.log(sublets)
       this.apartmentService.getApartments().subscribe(apartments => {
         const apartmentsDict = {};
         apartments.forEach(apartment => {
           apartmentsDict[apartment._id] = apartment;
-          console.log(apartment._id)
+
         });
-        console.log(apartmentsDict)
+
         sublets.forEach(sublet => {
-          console.log(apartmentsDict)
-          console.log(sublet)
-          console.log(apartmentsDict[sublet.apartment])
           sublet.apartmentObject = apartmentsDict[sublet.apartment]
-          console.log( sublet.apartmentObject)
         });
-        console.log(sublets)
         this.sublets = sublets;
       });
     });
