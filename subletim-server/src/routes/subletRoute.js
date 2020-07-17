@@ -69,6 +69,31 @@ router.put('/sublet/:id', function(req, res, next) {
     }
 });
 
+router.get('/groupBySublet', function(req, res){
+    console.log('group by sublet')
+    console.log(res)
+    db.subletimCollection.aggregate(([
+            {"$lookup": {
+                    "from": "apartmentsCollection",
+                    "localField": "apartment",
+                    "foreignField": "_id",
+                    "as": "A"
+                }},
+            { '$addFields': {
+                    'city': {
+                        '$map': {
+                            'input': '$A',
+                            'in': '$$this.city',
+                        }}
+                }},  {"$group" : {_id:"$city", count:{$sum:1}}}]),
+        function(err, groups){
+            if(err){
+                res.send(err);
+            }
+            res.json(groups);
+            console.log(groups)
+        });});
+
 router.get('/searchSublets', function(req, res, next) {
     let startDate = new Date(req.query.startDate);
     let endDate = new Date(req.query.endDate);
