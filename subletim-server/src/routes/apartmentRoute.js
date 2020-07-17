@@ -1,10 +1,10 @@
-var express = require('express');
-var router = express.Router();
-var mongojs = require('mongojs');
+const express = require('express');
+const router = express.Router();
+const mongojs = require('mongojs');
 const objectId = require('mongoose').Types.ObjectId;
 
-var db = mongojs('subletimDB', ['apartmentsCollection']);
-var userDb = mongojs('subletimDB', ['usersCollection'])
+const db = mongojs('subletimDB', ['apartmentsCollection']);
+const userDb = mongojs('subletimDB', ['usersCollection'])
 // Get All Apartments
 router.get('/apartments', function(req, res, next){
     db.apartmentsCollection.find(function(err, apartments){
@@ -102,7 +102,27 @@ router.get('/userApartments', function(req, res, next) {
         });
     }
 });
-
+router.get('/mapReduce', function(req, res, next) {
+    if (!req.query) {
+        res.status(400);
+        res.json({
+            "error": "Bad Data"
+        });
+    } else {
+        let map = function(){ emit(this.roomNumber, 1); }
+        let reduce = function(key, values){
+            return Array.sum(values);
+        }
+        db.apartmentsCollection.mapReduce(map, reduce,{ out: "map_reduce_example" })
+        db.map_reduce_example.find(function (err, apartments) {
+            if (err) {
+                res.send(err);
+            }
+            res.json(apartments);
+            console.log(apartments)
+        });
+    }
+});
 router.get('/searchApartmentsNotAdmin', function(req, res, next) {
     let city = req.query.city;
     let address = req.query.address;

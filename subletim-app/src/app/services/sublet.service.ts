@@ -48,5 +48,8 @@ export class SubletService{
     return this.http.get('subletRoute/searchSublets',  config)
       .map(res => res.json());
   }
-
+  groupBySublet(){
+    return this.http.get('subletRoute/groupBySublet')
+      .map(res => res.json());
+  }
 }

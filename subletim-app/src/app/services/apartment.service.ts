@@ -37,7 +37,10 @@ export class ApartmentService{
     return this.http.put('/apartmentRoute/apartment/'+apartment._id, JSON.stringify(apartment), {headers: headers})
       .map(res => res.json());
   }
-
+  mapReduce(){
+    return this.http.get('/apartmentRoute/mapReduce')
+      .map(res => res.json());
+  }
   searchApartment(city, address, rooms, currentUser, isAdmin){
     let config = {params: {city:city, address:address, rooms:rooms, currentUser:currentUser}}
     if(isAdmin) {

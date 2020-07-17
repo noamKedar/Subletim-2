@@ -1,8 +1,7 @@
 const express = require('express');
 const router = express.Router();
-var mongojs = require('mongojs');
-var db = mongojs('subletimDB', ['subletimCollection']); //local mongo installation, DB is mydb
-
+const mongojs = require('mongojs');
+const db = mongojs('subletimDB', ['subletimCollection']); //local mongo installation, DB is mydb
 
 // Get All Subletim
 router.get('/sublets', function(req, res, next) {
@@ -69,6 +68,29 @@ router.put('/sublet/:id', function(req, res, next) {
     }
 });
 
+router.get('/groupBySublet', function(req, res){
+    db.subletimCollection.aggregate(([
+            {"$lookup": {
+                    "from": "apartmentsCollection",
+                    "localField": "apartment",
+                    "foreignField": "_id",
+                    "as": "A"
+                }},
+            { '$addFields': {
+                    'city': {
+                        '$map': {
+                            'input': '$A',
+                            'in': '$$this.city',
+                        }}
+                }},  {"$group" : {_id:"$city", count:{$sum:1}}}]),
+        function(err, groups){
+            if(err){
+                res.send(err);
+            }
+            res.json(groups);
+        });});
+
+
 router.get('/searchSublets', function(req, res, next) {
     let startDate = new Date(req.query.startDate);
     let endDate = new Date(req.query.endDate);
@@ -76,12 +98,7 @@ router.get('/searchSublets', function(req, res, next) {
     let sdNan = isNaN(startDate.getTime())
     let edNan = isNaN(endDate.getTime())
     let pNan = isNaN(price);
-    console.log(startDate)
-    console.log(endDate)
-    console.log(price)
-    console.log(sdNan)
-    console.log(edNan)
-    console.log(pNan)
+
     if (!req.query){
         res.status(400);
         res.json({
