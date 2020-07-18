@@ -1,4 +1,5 @@
-<div class="title">Add New Apartment</div>
+<div class="title" *ngIf="isAddApartment">Add New Apartment</div>
+<div class="title" *ngIf="!isAddApartment">Edit Apartment</div>
 <form class="well" (submit)="addOrUpdateApartment($event)">
   <div class="form-group">
     <label for="apartmentName" class="input-title">APARTMENT NAME</label>

@@ -1,4 +1,5 @@
-<div class="title">Add New Sublet</div>
+<div class="title" *ngIf="isAddSublet">Add New Sublet</div>
+<div class="title" *ngIf="!isAddSublet">Edit Sublet</div>
 <form class="well" (submit)="addOrUpdateSublet($event)">
   <div class="form-group">
     <label for="subletName" class="input-title">SUBLET NAME</label>

@@ -15,7 +15,6 @@ export class addApartmentComponent {
   apartmentName: string = "";
   address: string = "";
   city: string = "";
-  //owner: string = "";
   owner: User;
   roomNumber: number;
   currentUser: User;
@@ -25,7 +24,7 @@ export class addApartmentComponent {
   @Input() createOrEdit;
   @Output() createOrEditChange = new EventEmitter<boolean>();
   @Output() showAddApartmentChange = new EventEmitter<boolean>();
-
+  isAddApartment: boolean = false;
   constructor(private apartmentService:ApartmentService,
     private authenticationService: AuthenticationService) {
     this.currentUser = this.authenticationService.currentUserValue;
@@ -39,6 +38,11 @@ export class addApartmentComponent {
       this.city = this.apartmentToEdit.city;
       this.roomNumber = this.apartmentToEdit.roomNumber;
       this.owner = this.apartmentToEdit.owner;
+
+      this.isAddApartment = false;
+    }
+    else {
+      this.isAddApartment = true;
     }
   }
 

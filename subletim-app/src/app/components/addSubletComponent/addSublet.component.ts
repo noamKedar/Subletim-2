@@ -3,6 +3,7 @@ import {SubletService} from "../../services/sublet.service";
 import {Sublet} from "../subletComponent/sublet";
 import {Apartment} from "../apartmentComponent/apartment";
 import {ApartmentService} from "../../services/apartment.service";
+import {AuthenticationService} from "../../services/authentication.service";
 
 
 @Component({
@@ -24,13 +25,12 @@ export class AddSubletComponent {
   @Input() createOrEdit;
   @Output() createOrEditChange = new EventEmitter<boolean>();
   @Output() showAddSubletChange = new EventEmitter<boolean>();
-
-  constructor(private subletService:SubletService, private apartmentService: ApartmentService) {
+  isAddSublet: boolean = false;
+  constructor(private subletService:SubletService, private apartmentService: ApartmentService, private authenticationService: AuthenticationService) {
     this.apartmentService.getApartments().subscribe(apartments => {
       this.apartments = apartments;
-    })
   }
-
+    )}
   ngOnInit() {
     if (this.subletToEdit) {
       this.subletName = this.subletToEdit.subletName;
@@ -38,6 +38,10 @@ export class AddSubletComponent {
       this.endDate = this.subletToEdit.endDate;
       this.price = this.subletToEdit.price;
       this.apartment = this.subletToEdit.apartment;
+      this.isAddSublet = false;
+    }
+    else {
+      this.isAddSublet = true;
     }
   }
 
