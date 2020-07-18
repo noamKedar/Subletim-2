@@ -26,11 +26,20 @@ export class AddSubletComponent {
   @Output() createOrEditChange = new EventEmitter<boolean>();
   @Output() showAddSubletChange = new EventEmitter<boolean>();
   isAddSublet: boolean = false;
-  constructor(private subletService:SubletService, private apartmentService: ApartmentService, private authenticationService: AuthenticationService) {
-    this.apartmentService.getApartments().subscribe(apartments => {
-      this.apartments = apartments;
+
+  constructor(private subletService: SubletService, private apartmentService: ApartmentService, private authenticationService: AuthenticationService) {
+    if (this.authenticationService.currentUserValue.isAdmin) {
+      this.apartmentService.getApartments().subscribe(apartments => {
+          this.apartments = apartments;
+        }
+      )
+    } else {
+      this.apartmentService.getUserApartments(this.authenticationService.currentUserValue._id).subscribe(apartments => {
+        this.apartments = apartments;
+      })
+    }
   }
-    )}
+
   ngOnInit() {
     if (this.subletToEdit) {
       this.subletName = this.subletToEdit.subletName;
@@ -39,8 +48,7 @@ export class AddSubletComponent {
       this.price = this.subletToEdit.price;
       this.apartment = this.subletToEdit.apartment;
       this.isAddSublet = false;
-    }
-    else {
+    } else {
       this.isAddSublet = true;
     }
   }
@@ -56,7 +64,7 @@ export class AddSubletComponent {
     this.createOrEditChange.emit(false);
   }
 
-  addSublet(){
+  addSublet() {
     const newSublet = {
       subletName: this.subletName,
       startDate: this.startDate,
