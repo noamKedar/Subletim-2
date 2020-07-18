@@ -19,20 +19,7 @@ export class SubletsComponent {
   @Output() showSubletsListChange = new EventEmitter<boolean>();
 
   constructor(private subletService:SubletService, private apartmentService: ApartmentService) {
-
-    this.subletService.getSublets()
-      .subscribe(sublets => {
-        this.apartmentService.getApartments().subscribe(apartments => {
-          const apartmentsDict = {};
-          apartments.forEach(apartment => {
-            apartmentsDict[apartment._id] = apartment;
-          });
-          sublets.forEach(sublet => {
-            sublet.apartmentObject = apartmentsDict[sublet.apartment]
-          });
-          this.sublets = sublets;
-        });
-      });
+    this.getSubletim();
   }
 
   addNewSublet() {
@@ -41,10 +28,7 @@ export class SubletsComponent {
   }
 
   finishedAddingOrCreate() {
-    this.subletService.getSublets()
-      .subscribe(sublets => {
-        this.sublets = sublets;
-      });
+    this.getSubletim();
     this.subletToEdit = null;
     this.createOrEdit = false;
   }
@@ -85,20 +69,27 @@ export class SubletsComponent {
         const apartmentsDict = {};
         apartments.forEach(apartment => {
           apartmentsDict[apartment._id] = apartment;
-          console.log(apartment._id)
         });
-        console.log(apartmentsDict)
         sublets.forEach(sublet => {
-          console.log(apartmentsDict)
-          console.log(sublet)
-          console.log(apartmentsDict[sublet.apartment])
           sublet.apartmentObject = apartmentsDict[sublet.apartment]
-          console.log( sublet.apartmentObject)
         });
-        console.log(sublets)
         this.sublets = sublets;
       });
     });
   }
-
+  getSubletim(){
+    this.subletService.getSublets()
+      .subscribe(sublets => {
+        this.apartmentService.getApartments().subscribe(apartments => {
+          const apartmentsDict = {};
+          apartments.forEach(apartment => {
+            apartmentsDict[apartment._id] = apartment;
+          });
+          sublets.forEach(sublet => {
+            sublet.apartmentObject = apartmentsDict[sublet.apartment]
+          });
+          this.sublets = sublets;
+        });
+      });
+  }
 }
