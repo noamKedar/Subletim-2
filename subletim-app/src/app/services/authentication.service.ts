@@ -43,12 +43,10 @@ export class AuthenticationService {
   }
 
   updateUser(userId,user){
-    var headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-    return this.http.put('/userRoute/user/'+userId, JSON.stringify(user))
+    return this.http.put<any>('/userRoute/user/'+userId, user)
       .map(res => {
-        localStorage.setItem('currentUser', JSON.stringify(res));
-        this.currentUserSubject.next(user);
+        localStorage.setItem('currentUser',res);
+        this.currentUserSubject.next(res);
         return res
       });
   }
