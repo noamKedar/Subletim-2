@@ -42,13 +42,14 @@
 
 .button {
   width: 5%;
-  min-height: 42px;
-  margin: 0;
   bottom: 28px;
   border: 2px solid #777777;
   border-radius: 6px;
   padding: 0px;
   cursor: pointer;
+  text-align: center;
+  margin: 2%;
+  height: 40px;
 }
 
 .button:hover {
@@ -83,7 +84,12 @@ table th {
 }
 
 .new-button {
-  width: 10%;
+  width: 12.5%;
+
+}
+
+.labels{
+  margin: 2% ;
 }
 
 .icon {
