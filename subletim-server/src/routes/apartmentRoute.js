@@ -4,7 +4,7 @@ const mongojs = require('mongojs');
 const objectId = require('mongoose').Types.ObjectId;
 
 const db = mongojs('subletimDB', ['apartmentsCollection']);
-const userDb = mongojs('subletimDB', ['usersCollection'])
+
 // Get All Apartments
 router.get('/apartments', function(req, res, next){
     db.apartmentsCollection.find(function(err, apartments){
@@ -37,6 +37,13 @@ router.post('/apartment', function(req, res, next){
 
 // Delete Task
 router.delete('/apartment/:id', function(req, res, next){
+    // delete all sublets of the apartment
+    db.subletimCollection.remove({apartment: mongojs.ObjectId(req.params.id)}, function(err, apartment){
+        if(err){
+            res.write(err);
+        }
+    });
+
     db.apartmentsCollection.remove({_id: mongojs.ObjectId(req.params.id)}, function(err, apartment){
         if(err){
             res.send(err);

@@ -1,7 +1,13 @@
 var express = require('express');
 var router = express.Router();
 var mongojs = require('mongojs');
+
+const objectId = require('mongoose').Types.ObjectId;
+
 var db = mongojs('subletimDB', ['usersCollection']); //local mongo installation, DB is subletimDB
+var apartmentsDb = mongojs('subletimDB', ['apartmentsCollection']);
+var subletimDB= mongojs('subletimDB', ['subletimCollection']);
+
 // Get All Users
 router.get('/users', function (req, res, next) {
     db.usersCollection.find(function (err, user) {
@@ -32,6 +38,31 @@ router.post('/user', function (req, res, next) {
 });
 // Delete User
 router.delete('/user/:id', function (req, res, next) {
+    let id = req.params.id;
+    console.log(req.params.id)
+    apartmentsDb.apartmentsCollection.find({owner: new objectId(req.params.id)}, function (err, apartments) {
+        if (err) {
+            res.write(err);
+        }
+        else{
+            apartments.forEach(apartment => {
+                subletimDB.subletimCollection.remove({apartment: mongojs.ObjectId(apartment._id)}, function(err){
+                    if(err){
+                        res.write(err);
+                    }
+                });
+            });
+
+            apartmentsDb.apartmentsCollection.remove({owner: new objectId(id)}, function (err) {
+                console.log(req.params._id)
+                if (err) {
+                    res.write(err);
+                    console.log(err)
+                }
+            });
+        }
+    });
+
     db.usersCollection.remove({_id: mongojs.ObjectId(req.params.id)}, function (err, user) {
         if (err) {
             res.send(err);
