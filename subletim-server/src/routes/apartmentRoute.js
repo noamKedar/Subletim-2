@@ -91,9 +91,9 @@ router.put('/apartment/:id', function(req, res, next){
         });
     }
 });
-router.get('/userApartments', function(req, res, next) {
+router.get('/userApartments', function(req, res) {
     let id = req.query.user;
-
+    console.log(id)
     if (!req.query) {
         res.status(400);
         res.json({

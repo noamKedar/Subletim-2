@@ -35,7 +35,6 @@ export class ApartmentComponents {
       .subscribe(apartments => {
         this.apartments = apartments;
       });
-    console.log('got here 4');
     this.apartmentToEdit = null;
     this.createOrEdit = false;
     this.setApartmentsByUser()
@@ -90,7 +89,7 @@ export class ApartmentComponents {
   }
 
   setApartmentsByUser(){
-    if(this.currentUser.isAdmin) {
+    if(this.currentUser.isAdmin === true) {
       this.apartmentService.getApartments()
         .subscribe(apartments => {
           this.userService.getUsers().subscribe(users => {
@@ -98,7 +97,6 @@ export class ApartmentComponents {
             users.forEach(user => {
               usersDict[user._id] = user;
             });
-            console.log(usersDict)
             apartments.forEach(apartment => {
               apartment.owner = usersDict[apartment.owner]
             });

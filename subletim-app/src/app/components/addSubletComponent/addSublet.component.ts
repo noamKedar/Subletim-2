@@ -28,7 +28,7 @@ export class AddSubletComponent {
   isAddSublet: boolean = false;
 
   constructor(private subletService: SubletService, private apartmentService: ApartmentService, private authenticationService: AuthenticationService) {
-    if (this.authenticationService.currentUserValue.isAdmin) {
+    if (this.authenticationService.currentUserValue.isAdmin === true) {
       this.apartmentService.getApartments().subscribe(apartments => {
           this.apartments = apartments;
         }
