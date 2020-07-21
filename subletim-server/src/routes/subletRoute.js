@@ -5,26 +5,26 @@ const db = mongojs('subletimDB', ['subletimCollection']); //local mongo installa
 
 // Get All Subletim
 router.get('/sublets', function(req, res, next) {
-    db.subletimCollection.find(function(err, tasks){
+    db.subletimCollection.find(function(err, sublets){
         if(err) {
             res.send(err);
         }
-        res.json(tasks);
+        res.json(sublets);
     });
 });
 
 // Get Single Sublet
 router.get('/sublet/:id', function(req, res, next) {
-    db.subletimCollection.findOne({_id: mongojs.ObjectId(req.params.id)}, function(err, task){
+    db.subletimCollection.findOne({_id: mongojs.ObjectId(req.params.id)}, function(err, sublet){
         if(err){
             res.send(err);
         }
-        res.json(task);
+        res.json(sublet);
     });
 });
 //Save Sublet
 
-router.post('/sublet', function(req, res, next){
+router.post('/sublet', function(req, res, next) {
     var sublet = req.body;
     if(!sublet.subletName || !(sublet.startDate) || !(sublet.endDate)  || !(sublet.price)|| !(sublet.apartment)){
         res.status(400);
@@ -32,21 +32,21 @@ router.post('/sublet', function(req, res, next){
             "error": "Bad Data"
         });
     } else {
-        db.subletimCollection.save(task, function(err, task){
+        db.subletimCollection.save(sublet, function(err, sublet){
             if(err){
                 res.send(err);
             }
-            res.json(task);
+            res.json(sublet);
         });
     }
 });
 // Delete Sublet
 router.delete('/sublet/:id', function(req, res, next){
-    db.subletimCollection.remove({_id: mongojs.ObjectId(req.params.id)}, function(err, task){
+    db.subletimCollection.remove({_id: mongojs.ObjectId(req.params.id)}, function(err, sublet){
         if(err){
             res.send(err);
         }
-        res.json(task);
+        res.json(sublet);
     });
 });
 // Update Sublet
@@ -109,7 +109,6 @@ router.get('/searchSublets', function(req, res, next) {
            db.subletimCollection.find({}, function(err, sublets){
                if(err) {res.send(err);}
                res.json(sublets);
-               console.log(sublets)
            });
        }
        else if (sdNan && edNan  && !pNan){
@@ -118,7 +117,7 @@ router.get('/searchSublets', function(req, res, next) {
            }, function(err, sublets){
                if(err) {res.send(err);}
                res.json(sublets);
-               console.log(sublets)});
+           });
        }
        else if (!sdNan && edNan  && pNan ) {
            db.subletimCollection.find({
@@ -126,7 +125,6 @@ router.get('/searchSublets', function(req, res, next) {
            }, function(err, sublets){
                if(err) {res.send(err);}
                res.json(sublets);
-               console.log(sublets)
            });
        }
        else if (sdNan && !edNan && pNan) {
@@ -135,7 +133,6 @@ router.get('/searchSublets', function(req, res, next) {
            }, function(err, sublets){
                if(err) {res.send(err);}
                res.json(sublets);
-               console.log(sublets)
            });
        }
        else if (!sdNan && !edNan && pNan) {
@@ -145,7 +142,6 @@ router.get('/searchSublets', function(req, res, next) {
            }, function(err, sublets){
                if(err) {res.send(err);}
                res.json(sublets);
-               console.log(sublets)
            });
        }
        else if (!sdNan && edNan && !pNan) {
@@ -155,7 +151,6 @@ router.get('/searchSublets', function(req, res, next) {
            }, function(err, sublets){
                if(err) {res.send(err);}
                res.json(sublets);
-               console.log(sublets)
            });
        }
        else if (sdNan && !edNan && !pNan) {
@@ -165,11 +160,9 @@ router.get('/searchSublets', function(req, res, next) {
            }, function(err, sublets){
                if(err) {res.send(err);}
                res.json(sublets);
-               console.log(sublets)
            });
        }
        else if(!sdNan && !edNan && !pNan) {
-           console.log('here')
            db.subletimCollection.find({
                startDate: {$gte: startDate},
                endDate: {$lte: endDate},
@@ -177,7 +170,6 @@ router.get('/searchSublets', function(req, res, next) {
            }, function(err, sublets){
                if(err) {res.send(err);}
                res.json(sublets);
-               console.log(sublets)
            });
        }
     }

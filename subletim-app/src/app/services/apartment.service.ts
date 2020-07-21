@@ -17,8 +17,8 @@ export class ApartmentService{
   }
 
   getUserApartments(user){
-    console.log('service:' + user)
-    var config = {params: {user:user}}
+    console.log('service:' + user);
+    var config = {params: {user:user}};
     return this.http.get('apartmentRoute/userApartments', config)
       .map(res => res.json());
   }

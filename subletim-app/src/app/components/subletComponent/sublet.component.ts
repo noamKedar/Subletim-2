@@ -4,6 +4,8 @@ import {Sublet} from "./sublet";
 import {ApartmentService} from "../../services/apartment.service";
 import 'rxjs/add/operator/map';
 import {BehaviorSubject} from "rxjs";
+import {AuthenticationService} from "../../services/authentication.service";
+import {Apartment} from "../apartmentComponent/apartment";
 
 @Component({
   selector: 'sublets',
@@ -16,10 +18,25 @@ export class SubletsComponent {
   sublets: Sublet[];
   subletToEdit: number;
   createOrEdit: boolean = false;
+  userApartments: Apartment[];
   @Output() showSubletsListChange = new EventEmitter<boolean>();
 
-  constructor(private subletService:SubletService, private apartmentService: ApartmentService) {
+  constructor(private subletService:SubletService, private apartmentService: ApartmentService, private authenticationService: AuthenticationService) {
+    if (this.authenticationService.currentUserValue.isAdmin === true) {
+      this.apartmentService.getApartments().subscribe(apartments => {
+          this.userApartments = apartments;
+        }
+      )
+    } else {
+      this.apartmentService.getUserApartments(this.authenticationService.currentUserValue._id).subscribe(apartments => {
+        this.userApartments = apartments;
+      })
+    }
     this.getSubletim();
+  }
+
+  isAbleToEdit(apartmentId) {
+    return (this.userApartments.filter(apartment => apartmentId === apartment._id).length > 0);
   }
 
   addNewSublet() {
@@ -64,7 +81,6 @@ export class SubletsComponent {
     let price = (<HTMLInputElement>document.getElementById("priceTxt")).value
 
     this.subletService.searchSublet(startDate, endDate, price).subscribe(sublets => {
-      console.log(sublets)
       this.apartmentService.getApartments().subscribe(apartments => {
         const apartmentsDict = {};
         apartments.forEach(apartment => {

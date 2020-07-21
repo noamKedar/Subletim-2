@@ -27,13 +27,10 @@ module.exports = class scrapingModule {
             const subletsNodes = document.querySelectorAll('#hotellist_inner > div');
             const subletNamesList = document.querySelectorAll('#hotellist_inner > div > div.sr_item_content.sr_item_content_slider_wrapper > div.sr_property_block_main_row > div.sr_item_main_block > div.sr-hotel__title-wrap > h3 > a > span.sr-hotel__name');
             const subletAddressesList = document.querySelectorAll('#hotellist_inner > div > div.sr_item_content.sr_item_content_slider_wrapper > div.sr_property_block_main_row > div.sr_item_main_block > div.sr_card_address_line > a');
-            console.log(subletsNodes);
-            console.log(subletNamesList);
-            console.log(subletAddressesList);
             subletsNodes.forEach(async (apartmentElement, i) => {
                 const subletName = subletNamesList[i].textContent.trim();
                 const subletAddress = subletAddressesList[i].textContent.split('\n')[1].trim();
-                const subletNumOfRooms = Math.random() * (5 - 1) + 1;
+                const subletNumOfRooms = parseInt(Math.random() * (5 - 1) + 1);
                 const newApartment = {
                     city: subletAddress,
                     apartmentName: subletName,
@@ -41,7 +38,6 @@ module.exports = class scrapingModule {
                     roomNumber: subletNumOfRooms,
                     owner: null
                 };
-                console.log(newApartment);
                 apartmentsToAdd.push(newApartment);
             });
             return apartmentsToAdd;

@@ -7,11 +7,11 @@
   </div>
   <div class="form-group">
     <label for="startDate" class="input-title">START DATE</label>
-    <input id="startDate" type="date" [ngModel]="startDate | date:'yyyy-MM-dd'" name="startDate" class="form-control" placeholder="Enter Start Date">
+    <input id="startDate" type="date" (ngModelChange)="updateStartDate($event)" [ngModel]="startDate | date:'yyyy-MM-dd'" name="startDate" class="form-control" placeholder="Enter Start Date">
   </div>
   <div class="form-group">
     <label for="endDate" class="input-title">END DATE</label>
-    <input id="endDate" type="date" [ngModel]="endDate | date:'yyyy-MM-dd'" name="endDate" class="form-control" placeholder="Enter End Date">
+    <input id="endDate" type="date" (ngModelChange)="updateEndDate($event)" [ngModel]="endDate | date:'yyyy-MM-dd'" name="endDate" class="form-control" placeholder="Enter End Date">
   </div>
   <div class="form-group">
     <label for="price" class="input-title">PRICE</label>
@@ -20,7 +20,7 @@
   <div class="form-group">
     <label for="apartment" class="input-title">APARTMENT</label>
     <br>
-    <select id="apartment" placeholder="Select Apartment" [(ngModel)]="apartment" name="apartment" size="{{apartments.length}}">
+    <select id="apartment" placeholder="Select Apartment" [(ngModel)]="apartment" name="apartment" size="{{(apartments || []).length}}">
       <option *ngFor="let apartment of apartments" [ngValue]="apartment">{{apartment.apartmentName}}</option>
     </select>
   </div>
