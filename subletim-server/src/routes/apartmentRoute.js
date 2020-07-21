@@ -26,18 +26,31 @@ router.get('/apartments/:id', function(req, res, next){
 });
 
 //Save Apartment
-router.post('/apartment', function(req, res, next){
-        db.apartmentsCollection.save(apartment, function(err, apartment){
-            if(err){
-                res.send(err);
-            }
-            res.json(apartment);
-        });
+router.post('/apartment', function(req, res){
+        let apartmentToAdd = req.body;
+
+    db.apartmentsCollection.findOne({apartmentName: apartmentToAdd.apartmentName}, function (err, apartment) {
+        if (err) {
+            console.log('error')
+            res.send(err);
+        }
+        if (apartment) {
+            console.log('apart exist')
+            res.json("Apartment already exists");
+        } else {
+            console.log('add apart')
+            db.apartmentsCollection.save(apartmentToAdd, function (err, apartment) {
+                if (err) {
+                    res.send(err);
+                }
+                res.json(apartment);
+            });
+        }
+    });
 });
 
-// Delete Task
+// Delete apartment
 router.delete('/apartment/:id', function(req, res, next){
-    // delete all sublets of the apartment
     db.subletimCollection.remove({apartment: mongojs.ObjectId(req.params.id)}, function(err, apartment){
         if(err){
             res.write(err);

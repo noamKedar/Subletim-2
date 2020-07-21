@@ -19,6 +19,7 @@ export class addApartmentComponent {
   roomNumber: number;
   currentUser: User;
 
+  @Input() UnvalidApartmentName;
   @Input() apartmentToEdit;
   @Output() apartmentToEditChange = new EventEmitter<boolean>();
   @Input() createOrEdit;
@@ -51,29 +52,24 @@ export class addApartmentComponent {
     if (this.apartmentToEdit) {
       await this.updateApartment();
     } else {
-      this.addApartment();
+      await this.addApartment();
     }
     this.apartmentToEditChange.emit(null);
     this.createOrEditChange.emit(false);
 
   }
 
-  addApartment(){
-    const newApartment = {
-      apartmentName: this.apartmentName,
-      address: this.address,
-      city: this.city,
-      roomNumber: this.roomNumber,
-      owner:this.currentUser
+  async addApartment(){
+    console.log('ADD APARTMENT FUNC')
+    console.log(this.currentUser)
+    var newApartment = {
+      apartmentName: (<HTMLInputElement>document.getElementById("nameInp")).value,
+      address: (<HTMLInputElement>document.getElementById("addressInp")).value,
+      city: (<HTMLInputElement>document.getElementById("cityInp")).value,
+      roomNumber: parseInt((<HTMLInputElement>document.getElementById("roomInp")).value),
+      owner: this.currentUser._id
     };
-
-    this.apartmentService.addApartment(newApartment)
-      .subscribe(apartment => {
-        this.apartmentName = '';
-        this.address = '';
-        this.city = '';
-        this.roomNumber = 0;
-      });
+    await this.apartmentService.addApartment(newApartment).subscribe();
   }
 
   async updateApartment() {
@@ -90,7 +86,13 @@ export class addApartmentComponent {
   }
 
   valid() {
-    return (this.apartmentName && this.address && this.city && this.roomNumber); //&& this.owner);
+   let name = (<HTMLInputElement>document.getElementById("nameInp")).value;
+   let address =(<HTMLInputElement>document.getElementById("addressInp")).value;
+   let city = (<HTMLInputElement>document.getElementById("cityInp")).value;
+   let rooms = parseInt((<HTMLInputElement>document.getElementById("roomInp")).value);
+
+   let isValid =  (name && address && city && !isNaN(rooms));
+   return isValid;
   }
 
   returnToMainPage() {
