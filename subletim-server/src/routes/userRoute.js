@@ -39,7 +39,6 @@ router.post('/user', function (req, res, next) {
 // Delete User
 router.delete('/user/:id', function (req, res, next) {
     let id = req.params.id;
-    console.log(req.params.id)
     apartmentsDb.apartmentsCollection.find({owner: new objectId(req.params.id)}, function (err, apartments) {
         if (err) {
             res.write(err);
@@ -54,7 +53,6 @@ router.delete('/user/:id', function (req, res, next) {
             });
 
             apartmentsDb.apartmentsCollection.remove({owner: new objectId(id)}, function (err) {
-                console.log(req.params._id)
                 if (err) {
                     res.write(err);
                     console.log(err)
@@ -78,7 +76,6 @@ router.put('/user/:id', function (req, res, next) {
             "error": "Bad Data"
         });
     } else {
-        console.log(req.body)
         db.usersCollection.update({_id: mongojs.ObjectId(req.params.id)}, {$set: req.body}, function (err, user) {
             if (err) {
                 res.send(err);
@@ -112,7 +109,7 @@ router.post('/user/authenticate', function (req, res, next) {
 });
 //Register
 router.post('/user/register', function (req, res, next) {
-    const userToSave = req.body
+    const userToSave = req.body;
 
     db.usersCollection.findOne({userName: userToSave.userName}, function (err, user) {
         if (err) {

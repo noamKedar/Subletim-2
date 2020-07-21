@@ -55,7 +55,6 @@ const SubletModel = mongoose.model("subletModel",sublet , "subletimCollection");
 
 function insertToDB(collectionName, objectType, objectsArr) {
     db.collection(collectionName).insertMany(objectsArr, function(err, res) {
-        console.log(objectsArr[0])
         if (err) throw err;
         console.log("Number of " + objectType + " documents inserted: " + res.insertedCount);
         db.close()

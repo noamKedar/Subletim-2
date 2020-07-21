@@ -28,25 +28,31 @@ export class AddSubletComponent {
   isAddSublet: boolean = false;
 
   constructor(private subletService: SubletService, private apartmentService: ApartmentService, private authenticationService: AuthenticationService) {
+
+  }
+
+  ngOnInit() {
     if (this.authenticationService.currentUserValue.isAdmin === true) {
       this.apartmentService.getApartments().subscribe(apartments => {
           this.apartments = apartments;
+          this.initSubletToEdit();
         }
       )
     } else {
       this.apartmentService.getUserApartments(this.authenticationService.currentUserValue._id).subscribe(apartments => {
         this.apartments = apartments;
+        this.initSubletToEdit();
       })
     }
   }
 
-  ngOnInit() {
+  initSubletToEdit() {
     if (this.subletToEdit) {
       this.subletName = this.subletToEdit.subletName;
       this.startDate = this.subletToEdit.startDate;
       this.endDate = this.subletToEdit.endDate;
       this.price = this.subletToEdit.price;
-      this.apartment = this.subletToEdit.apartment;
+      this.apartment = this.apartments.filter(apartment => apartment._id === this.subletToEdit.apartment)[0];
       this.isAddSublet = false;
     } else {
       this.isAddSublet = true;
@@ -62,6 +68,7 @@ export class AddSubletComponent {
     }
     this.subletToEditChange.emit(null);
     this.createOrEditChange.emit(false);
+    this.returnToMainPage();
   }
 
   addSublet() {
@@ -70,7 +77,7 @@ export class AddSubletComponent {
       startDate: this.startDate,
       endDate: this.endDate,
       price: this.price,
-      apartment: this.apartment
+      apartment: this.apartment._id
     };
 
     this.subletService.addSublet(newSublet)
@@ -90,13 +97,21 @@ export class AddSubletComponent {
       startDate: this.startDate,
       endDate: this.endDate,
       price: this.price,
-      apartment: this.apartment,
+      apartment: this.apartment._id,
     };
     await this.subletService.updateSublet(_sublet).subscribe();
   }
 
   valid() {
     return (this.subletName && this.startDate && this.endDate && this.price && this.apartment);
+  }
+
+  updateStartDate(event) {
+    this.startDate = new Date(event);
+  }
+
+  updateEndDate(event) {
+    this.endDate = new Date(event);
   }
 
   returnToMainPage() {

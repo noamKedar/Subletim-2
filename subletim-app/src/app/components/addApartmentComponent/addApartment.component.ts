@@ -60,9 +60,7 @@ export class addApartmentComponent {
   }
 
   async addApartment(){
-    console.log('ADD APARTMENT FUNC')
-    console.log(this.currentUser)
-    var newApartment = {
+    const newApartment = {
       apartmentName: (<HTMLInputElement>document.getElementById("nameInp")).value,
       address: (<HTMLInputElement>document.getElementById("addressInp")).value,
       city: (<HTMLInputElement>document.getElementById("cityInp")).value,
@@ -74,7 +72,7 @@ export class addApartmentComponent {
 
   async updateApartment() {
 
-    var _apartment ={
+    const _apartment ={
       _id: this.apartmentToEdit._id,
       apartmentName: (<HTMLInputElement>document.getElementById("nameInp")).value,
       address: (<HTMLInputElement>document.getElementById("addressInp")).value,
