@@ -2,7 +2,7 @@ import {Component, EventEmitter, Output} from "@angular/core";
 import {SubletService} from "../../services/sublet.service";
 import {User} from "../user/user";
 import {AuthenticationService} from "../../services/authentication.service";
-import {UserService} from "../../services/user.service";
+import {ApartmentService} from "../../services/apartment.service";
 
 @Component({
   selector: 'main-page',
@@ -22,9 +22,11 @@ export class MainPageComponent {
   viewApartments: boolean = false;
   @Output() showLoginChange = new EventEmitter<boolean>();
 
-  constructor(
-    private authenticationService: AuthenticationService) {
+  constructor(private authenticationService: AuthenticationService,
+              private subletService: SubletService,
+              private apartmentService: ApartmentService) {
     this.currentUser = this.authenticationService.currentUserValue;
+
   }
 
   toggleAddSublet() {

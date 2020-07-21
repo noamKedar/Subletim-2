@@ -8,6 +8,8 @@ const indexRouter = require('./src/routes/index');
 const subletRouter = require('./src/routes/subletRoute');
 const apartmentRouter = require('./src/routes/apartmentRoute');
 const userRouter = require('./src/routes/userRoute');
+const scrapingModule = require('./src/modules/ScrapingModule');
+const scraping = new scrapingModule();
 
 const app = express();
 const cors = require('cors');
@@ -50,3 +52,5 @@ app.use(function(err, req, res, next) {
 app.listen(4200, function () {
     console.log('App listening on port 4200!');
 });
+
+scraping.scrapeBooking();

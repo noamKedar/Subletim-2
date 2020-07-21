@@ -18,10 +18,10 @@ export class SubletService{
       .map(res => res.json());
   }
 
-  addSublet(newTask) {
+  addSublet(newSublet) {
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    return this.http.post('subletRoute/sublet', JSON.stringify(newTask), {headers: headers})
+    return this.http.post('subletRoute/sublet', JSON.stringify(newSublet), {headers: headers})
       .map(res => res.json());
   }
 
