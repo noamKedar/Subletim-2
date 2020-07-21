@@ -3,19 +3,19 @@
 <form class="well" (submit)="addOrUpdateApartment($event)">
   <div class="form-group">
     <label for="apartmentName" class="input-title">APARTMENT NAME</label>
-    <input type="text" [(ngModel)]="apartmentName" name="apartmentName" class="form-control" placeholder="Enter Apartment Name">
+    <input id="nameInp" type="text" [(ngModel)]="apartmentName" name="apartmentName" class="form-control" placeholder="Enter Apartment Name">
   </div>
   <div class="form-group">
     <label for="address" class="input-title">ADDRESS</label>
-    <input type="address" [ngModel]="address" name="address" class="form-control" placeholder="Enter Address">
+    <input id="addressInp" type="address" [ngModel]="address" name="address" class="form-control" placeholder="Enter Address">
   </div>
   <div class="form-group">
     <label for="city" class="input-title">CITY</label>
-    <input type="city" [ngModel]="city" name="city" class="form-control" placeholder="Enter City Name">
+    <input id="cityInp"  type="city" [ngModel]="city" name="city" class="form-control" placeholder="Enter City Name">
   </div>
   <div class="form-group">
     <label for="roomNumber" class="input-title">ROOM NUMBER</label>
-    <input type="number" min="1" [(ngModel)]="roomNumber" name="roomNumber" class="form-control" placeholder="Enter Number Of Rooms">
+    <input id="roomInp"  type="number" min="1" [(ngModel)]="roomNumber" name="roomNumber" class="form-control" placeholder="Enter Number Of Rooms">
   </div>
   <!--
   <div class="form-group">

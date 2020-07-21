@@ -29,9 +29,7 @@ export class GraphsComponent {
       data.forEach(sublet => {
         subletsDict[sublet._id] = sublet;
       });
-      console.log(data)
       for (let i = 0; i < data.length; i++) {
-        console.log(data[i])
         this.dataArray.push({city: data[i]._id, sublets: data[i].count})
       }
 
@@ -104,7 +102,6 @@ export class GraphsComponent {
 
     this.apartmentService.mapReduce().subscribe(data => {
       for (let i = 0; i < data.length; i++) {
-        console.log(data[i])
         this.secondGraphDataArray.push({numOfRooms: parseInt(data[i]._id), amountOfApartments:(data[i].value)})
       }
 

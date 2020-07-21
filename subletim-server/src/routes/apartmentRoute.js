@@ -53,44 +53,24 @@ router.delete('/apartment/:id', function(req, res, next){
 });
 
 // Update Apartment
-router.put('/apartment/:id', function(req, res, next){
+router.put('/apartment/:id', function(req, res){
     var apartment = req.body;
-    var updApartment = {};
-
-    if(apartment.apartmentName){
-        updApartment.apartmentName = apartment.apartmentName;
-    }
-
-    if(apartment.city){
-        updApartment.city = apartment.city;
-    }
-
-    if(apartment.address){
-        updApartment.address = apartment.address;
-    }
-
-    if(apartment.owner){
-        updApartment.owner = apartment.owner;
-    }
-
-    if(apartment.roomNumber){
-        updApartment.roomNumber = apartment.roomNumber;
-    }
-
-    if(!updApartment){
-        res.status(400);
-        res.json({
-            "error":"Bad Data"
-        });
-    } else {
-        db.apartmentsCollection.update({_id: mongojs.ObjectId(req.params.id)},updApartment, {}, function(err, apartment){
+    db.apartmentsCollection.update({_id:new objectId(req.params.id)}, {
+            $set:
+                {
+                    apartmentName: apartment.apartmentName,
+                    address:apartment.address,
+                    city:apartment.city,
+                    roomNumber:apartment.roomNumber
+                }
+        }, {}, function(err, apartment){
             if(err){
                 res.send(err);
             }
             res.json(apartment);
         });
-    }
 });
+
 router.get('/userApartments', function(req, res) {
     let id = req.query.user;
     console.log(id)

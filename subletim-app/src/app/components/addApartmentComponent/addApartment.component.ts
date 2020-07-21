@@ -64,7 +64,6 @@ export class addApartmentComponent {
       address: this.address,
       city: this.city,
       roomNumber: this.roomNumber,
-      //owner: this.owner
       owner:this.currentUser
     };
 
@@ -74,18 +73,18 @@ export class addApartmentComponent {
         this.address = '';
         this.city = '';
         this.roomNumber = 0;
-        //this.owner = '';
       });
   }
 
   async updateApartment() {
-    var _apartment = {
+
+    var _apartment ={
       _id: this.apartmentToEdit._id,
-      apartmentName: this.apartmentName,
-      address: this.address,
-      city: this.city,
-      roomNumber: this.roomNumber,
-      owner: this.currentUser,
+      apartmentName: (<HTMLInputElement>document.getElementById("nameInp")).value,
+      address: (<HTMLInputElement>document.getElementById("addressInp")).value,
+      city: (<HTMLInputElement>document.getElementById("cityInp")).value,
+      roomNumber: parseInt((<HTMLInputElement>document.getElementById("roomInp")).value),
+      owner: this.owner
     };
     await this.apartmentService.updateApartment(_apartment).subscribe();
   }
