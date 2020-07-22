@@ -76,7 +76,11 @@ const user4 = new UserModel({ _id : new ObjectID, firstName: "testFirst", lastNa
 const user5 = new UserModel({ _id : new ObjectID, firstName: "testUser", lastName: "testUserLast", email: "test2@gmail.com",
     userName: "testUN2", phoneNumber: "0523465730", password: "123456", isAdmin: false
 });
-const usersArr = [user1, user2, user3, user4, user5]
+const Booking_user = new UserModel({ _id : ObjectID('5f18915a8b695c03f035bbbb'), firstName: "booking", lastName: "user", email: "booking@booking.com",
+    userName: "booking", phoneNumber: "9723453499", password: "123456", isAdmin: true
+});
+
+const usersArr = [user1, user2, user3, user4, user5,Booking_user]
 insertToDB("usersCollection", "users", usersArr);
 
 const apartment1 = new ApartmentModel({_id : new ObjectID, apartmentName: "Great Apartment", city:"Tel Aviv", address: "Rotschild 1",
@@ -86,7 +90,7 @@ const apartment2 = new ApartmentModel({_id : new ObjectID, apartmentName: "Cool 
     owner: user2._id, roomNumber: 4
 });
 const apartment3 = new ApartmentModel({_id : new ObjectID, apartmentName: "Beautiful Apartment", city:"Tel Aviv", address: "Rotschild 3",
-    owner: user3._id, roomNumber: 5
+    owner: user4._id, roomNumber: 5
 });
 const apartment4 = new ApartmentModel({_id : new ObjectID, apartmentName: "Amazing Apartment", city:"Jerusalem", address: "Rotschild 4",
     owner: user4._id, roomNumber: 3
@@ -94,6 +98,7 @@ const apartment4 = new ApartmentModel({_id : new ObjectID, apartmentName: "Amazi
 const apartment5 = new ApartmentModel({_id : new ObjectID, apartmentName: "Cute Apartment", city:"Jerusalem", address: "Rotschild 5",
     owner: user4._id, roomNumber: 6
 });
+
 
 const apartmentsArr = [apartment1, apartment2, apartment3, apartment4, apartment5];
 insertToDB("apartmentsCollection", "apartments", apartmentsArr);
@@ -104,6 +109,10 @@ const sublet2 = new SubletModel({_id : new ObjectID, subletName: "Amazing sublet
     endDate: new Date("2020-09-30"), price: 6500, apartment: apartment2._id});
 const sublet3 = new SubletModel({_id : new ObjectID, subletName: "Best sublet", startDate: new Date("2020-10-01"),
     endDate: new Date("2020-10-10"), price: 5000, apartment: apartment3._id });
+const sublet4 = new SubletModel({_id : new ObjectID, subletName: "Good sublet", startDate: new Date("2020-11-01"),
+    endDate: new Date("2020-12-10"), price: 7000, apartment: apartment4._id });
+const sublet5 = new SubletModel({_id : new ObjectID, subletName: "Very good sublet", startDate: new Date("2020-12-12"),
+    endDate: new Date("2020-12-20"), price: 4000, apartment: apartment4._id });
 
-const subletsArr = [sublet1, sublet2, sublet3]
+const subletsArr = [sublet1, sublet2, sublet3, sublet4, sublet5]
 insertToDB("subletimCollection", "subletim", subletsArr);

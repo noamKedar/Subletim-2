@@ -36,7 +36,7 @@ module.exports = class scrapingModule {
                     apartmentName: subletName,
                     address: subletAddress,
                     roomNumber: subletNumOfRooms,
-                    owner: null
+                    owner: '5f18915a8b695c03f035bbbb'
                 };
                 apartmentsToAdd.push(newApartment);
             });
