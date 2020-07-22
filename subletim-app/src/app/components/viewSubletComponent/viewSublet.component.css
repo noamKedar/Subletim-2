@@ -18,6 +18,7 @@
 
 .sublet-details {
   margin-left: 5px;
+  display: inline-block;
 }
 
 .page-explanation {
@@ -32,4 +33,18 @@
   bottom: 3%;
   left: 6%;
   position: absolute;
+}
+
+.container-maps {
+  display: inline-block;
+  width: 50%;
+  margin-right: 25px;
+  position: absolute;
+  right: 0;
+  bottom: 20%;
+}
+
+#map {
+  height: 450px;
+  width: 100%;
 }

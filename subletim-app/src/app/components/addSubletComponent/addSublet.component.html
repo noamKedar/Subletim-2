@@ -20,7 +20,7 @@
   <div class="form-group">
     <label for="apartment" class="input-title">APARTMENT</label>
     <br>
-    <select id="apartment" placeholder="Select Apartment" [(ngModel)]="apartment" name="apartment" size="{{(apartments || []).length}}">
+    <select id="apartment" placeholder="Select Apartment" [(ngModel)]="apartment" name="apartment" size="{{apartments.length}}">
       <option *ngFor="let apartment of apartments" [ngValue]="apartment">{{apartment.apartmentName}}</option>
     </select>
   </div>

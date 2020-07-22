@@ -25,7 +25,9 @@ router.get('/sublet/:id', function(req, res, next) {
 //Save Sublet
 
 router.post('/sublet', function(req, res, next) {
-    var sublet = req.body;
+    const sublet = req.body;
+    sublet.startDate = new Date(sublet.startDate);
+    sublet.endDate = new Date(sublet.endDate);
     if(!sublet.subletName || !(sublet.startDate) || !(sublet.endDate)  || !(sublet.price)|| !(sublet.apartment)){
         res.status(400);
         res.json({
@@ -51,7 +53,9 @@ router.delete('/sublet/:id', function(req, res, next){
 });
 // Update Sublet
 router.put('/sublet/:id', function(req, res, next) {
-    var sublet = req.body;
+    const sublet = req.body;
+    sublet.startDate = new Date(sublet.startDate);
+    sublet.endDate = new Date(sublet.endDate);
     if (!sublet){
         res.status(400);
         res.json({
