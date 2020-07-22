@@ -17,6 +17,7 @@ import {addApartmentComponent} from "./components/addApartmentComponent/addApart
 import {MainPageComponent} from "./components/mainPageComponent/mainPage.component";
 import {GraphsComponent} from "./components/graphsComponent/graphs.component";
 import {UpdateUserComponent} from "./components/updateUserComponent/updateUser.component";
+import {ViewSubletComponent} from "./components/viewSubletComponent/viewSublet.component";
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import {UpdateUserComponent} from "./components/updateUserComponent/updateUser.c
     RegisterComponent,
     MainPageComponent,
     GraphsComponent,
-    UpdateUserComponent
+    UpdateUserComponent,
+    ViewSubletComponent
   ],
   imports: [
     BrowserModule,

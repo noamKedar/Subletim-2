@@ -19,6 +19,7 @@ export class SubletsComponent {
   subletToEdit: number;
   createOrEdit: boolean = false;
   userApartments: Apartment[];
+  subletToView: Sublet = null;
   @Output() showSubletsListChange = new EventEmitter<boolean>();
 
   constructor(private subletService:SubletService, private apartmentService: ApartmentService, private authenticationService: AuthenticationService) {
@@ -70,6 +71,14 @@ export class SubletsComponent {
 
   returnToMainPage() {
     this.showSubletsListChange.emit(false);
+  }
+
+  viewSublet(sublet) {
+    this.subletToView = sublet;
+  }
+
+  returnToList() {
+    this.subletToView = null;
   }
 
   searchSublet(){

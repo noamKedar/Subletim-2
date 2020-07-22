@@ -1,0 +1,22 @@
+<div class="sublet-details">
+  <div class="sublet-name">{{subletToShow.subletName}}</div>
+
+  <div class="page-explanation">In this page you can see the sublet details and location on map</div>
+
+  <div class="view-sublet-title">SUBLET PRICE</div>
+  <div>{{sublet.price}}</div>
+
+  <div class="view-sublet-title">SUBLET ADDRESS</div>
+  <div>{{sublet.apartmentObject.address}}</div>
+
+  <div class="view-sublet-title">SUBLET START DATE</div>
+  <div>{{sublet.startDate}}</div>
+
+  <div class="view-sublet-title">SUBLET END DATE</div>
+  <div>{{sublet.endDate}}</div>
+
+  <div class="view-sublet-title">NUMBER OF ROOMS</div>
+  <div>{{sublet.apartmentObject.roomNumber}}</div>
+</div>
+
+<img src="../../../assets/back.svg" (click)="back()" class="back-icon">

@@ -1,0 +1,35 @@
+@import "../../app.component.css";
+
+
+.view-sublet-title {
+  font-size: 16px;
+  margin-bottom: 4px;
+  margin-top: 20px;
+  font-weight: bold;
+}
+
+.sublet-name {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  color: turquoise;
+  font-size: 39px;
+  font-weight: bold;
+}
+
+.sublet-details {
+  margin-left: 5px;
+}
+
+.page-explanation {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.back-icon {
+  cursor: pointer;
+  width: 32px;
+  margin: 2px;
+  bottom: 3%;
+  left: 6%;
+  position: absolute;
+}
