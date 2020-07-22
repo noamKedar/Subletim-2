@@ -7,7 +7,7 @@
   <div>{{sublet.price}}</div>
 
   <div class="view-sublet-title">SUBLET ADDRESS</div>
-  <div>{{sublet.apartmentObject.address}}</div>
+  <div>{{sublet.apartmentObject.address + " ," + subletToShow.apartmentObject.city}}</div>
 
   <div class="view-sublet-title">SUBLET START DATE</div>
   <div>{{sublet.startDate}}</div>
@@ -17,6 +17,12 @@
 
   <div class="view-sublet-title">NUMBER OF ROOMS</div>
   <div>{{sublet.apartmentObject.roomNumber}}</div>
+</div>
+
+<div class="container-maps">
+  <div style="margin-top: 12px;">
+    <div #mapContainer id="map"></div>
+  </div>
 </div>
 
 <img src="../../../assets/back.svg" (click)="back()" class="back-icon">

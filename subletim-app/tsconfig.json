@@ -12,7 +12,7 @@
     "importHelpers": true,
     "noEmitOnError": true,
     "noImplicitAny": false,
-    "target": "es5",
+    "target": "es2015",
     "lib": [
       "es2018",
       "dom"

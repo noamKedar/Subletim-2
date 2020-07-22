@@ -53,4 +53,4 @@ app.listen(4200, function () {
     console.log('App listening on port 4200!');
 });
 
-scraping.scrapeBooking();
+//scraping.scrapeBooking();

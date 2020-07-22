@@ -18,6 +18,7 @@ import {MainPageComponent} from "./components/mainPageComponent/mainPage.compone
 import {GraphsComponent} from "./components/graphsComponent/graphs.component";
 import {UpdateUserComponent} from "./components/updateUserComponent/updateUser.component";
 import {ViewSubletComponent} from "./components/viewSubletComponent/viewSublet.component";
+import {GoogleMapsModule} from "@angular/google-maps";
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import {ViewSubletComponent} from "./components/viewSubletComponent/viewSublet.c
     HttpClientModule,
     HttpModule,
     ReactiveFormsModule,
+    GoogleMapsModule
   ],
   providers: [],
   bootstrap: [AppComponent, SubletsComponent]
