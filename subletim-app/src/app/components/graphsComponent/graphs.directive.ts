@@ -116,7 +116,7 @@ export class GraphsDirective {
         .attr("transform", "translate(" + margin2.left + "," + margin2.top + ")");
       // Add X axis
       const x2 = d3.scaleLinear()
-        .domain([0, 10])
+        .domain([0, 200])
         .range([0, width]);
       svg2.append("g")
         .attr("transform", "translate(0," + height + ")")

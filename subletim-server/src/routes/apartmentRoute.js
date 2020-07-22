@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const mongojs = require('mongojs');
 const objectId = require('mongoose').Types.ObjectId;
-
 const db = mongojs('subletimDB', ['apartmentsCollection']);
 
 // Get All Apartments
@@ -28,19 +27,27 @@ router.get('/apartments/:id', function(req, res, next){
 //Save Apartment
 router.post('/apartment', function(req, res){
         let apartmentToAdd = req.body;
-
+    console.log('add apartment')
     db.apartmentsCollection.findOne({apartmentName: apartmentToAdd.apartmentName}, function (err, apartment) {
         if (err) {
             res.send(err);
+            console.log('error1')
         }
         if (apartment) {
             res.json("Apartment already exists");
+            console.log('apart exist')
         } else {
             db.apartmentsCollection.save(apartmentToAdd, function (err, apartment) {
                 if (err) {
                     res.send(err);
+                    console.log('apart save')
                 }
-                res.json(apartment);
+                else {
+                    global.cms.update('apartments', 1)
+                    console.log('end route')
+                    console.log(apartment)
+                    res.json(apartment);
+                }
             });
         }
     });

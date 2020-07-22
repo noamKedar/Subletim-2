@@ -20,6 +20,7 @@ export class MainPageComponent {
   editUser: boolean = false;
   currentUser: User;
   viewApartments: boolean = false;
+  showStat: boolean = false;
   @Output() showLoginChange = new EventEmitter<boolean>();
 
   constructor(private authenticationService: AuthenticationService,
@@ -60,6 +61,10 @@ export class MainPageComponent {
 
   toggleApartments() {
     this.viewApartments = !this.viewApartments;
+  }
+
+  toggleStatistics(){
+    this.showStat =  !this.showStat;
   }
 }
 
