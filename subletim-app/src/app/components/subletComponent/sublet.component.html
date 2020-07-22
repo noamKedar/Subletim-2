@@ -1,5 +1,5 @@
 
-<div *ngIf="!createOrEdit">
+<div *ngIf="!createOrEdit && !subletToView">
 <div class="title">Sublets List</div>
 
 <input type="button" (click)="addNewSublet()" value="Add New Sublet" class="btn btn-danger button new-button">
@@ -41,7 +41,8 @@
     </td>
     <td>
       <img *ngIf="isAbleToEdit(sublet.apartmentObject._id)" src="../../../assets/pencil.svg" (click)="editSublet(sublet)" class="icon">
-      <img src="../../../assets/trash.svg" (click)="deleteSublet(sublet._id)" class="icon">
+      <img *ngIf="isAbleToEdit(sublet.apartmentObject._id)" src="../../../assets/trash.svg" (click)="deleteSublet(sublet._id)" class="icon">
+      <img src="../../../assets/view.svg" (click)="viewSublet(sublet)" class="icon">
     </td>
   </tr>
 </table>
@@ -51,3 +52,4 @@
 </div>
 
 <add-sublet *ngIf="createOrEdit" [createOrEdit]="createOrEdit" (showAddSubletChange)="showSubletsListChange.emit(false)" [subletToEdit]="subletToEdit" (createOrEditChange)="finishedAddingOrCreate()"></add-sublet>
+<view-sublet *ngIf="subletToView" [subletToShow]="subletToView" (subletToViewChange)="returnToList()"></view-sublet>

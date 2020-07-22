@@ -110,4 +110,5 @@ table th {
   bottom: 3%;
   left: 2%;
   position: absolute;
+  cursor: pointer;
 }
