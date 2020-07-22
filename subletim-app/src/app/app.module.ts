@@ -12,10 +12,9 @@ import {UserComponent} from "./components/user/user.components";
 import {AdminComponent} from "./components/admin/admin.component";
 import {LoginComponent} from "./components/login/login.component";
 import {RegisterComponent} from "./components/register/register.component";
-import {RouterModule} from "@angular/router";
 import {addApartmentComponent} from "./components/addApartmentComponent/addApartment.component";
 import {MainPageComponent} from "./components/mainPageComponent/mainPage.component";
-import {GraphsComponent} from "./components/graphsComponent/graphs.component";
+import {GraphsDirective} from "./components/graphsComponent/graphs.directive";
 import {UpdateUserComponent} from "./components/updateUserComponent/updateUser.component";
 import {ViewSubletComponent} from "./components/viewSubletComponent/viewSublet.component";
 import {GoogleMapsModule} from "@angular/google-maps";
@@ -34,7 +33,7 @@ import {GoogleMapsModule} from "@angular/google-maps";
     LoginComponent,
     RegisterComponent,
     MainPageComponent,
-    GraphsComponent,
+    GraphsDirective,
     UpdateUserComponent,
     ViewSubletComponent
   ],
@@ -47,6 +46,6 @@ import {GoogleMapsModule} from "@angular/google-maps";
     GoogleMapsModule
   ],
   providers: [],
-  bootstrap: [AppComponent, SubletsComponent]
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

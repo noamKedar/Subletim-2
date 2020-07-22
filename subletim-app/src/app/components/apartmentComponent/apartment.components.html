@@ -49,4 +49,4 @@
     <img src="../../../assets/home.svg" (click)="returnToMainPage()" class="home-icon">
   </div>
 </div>
-<add-apartment *ngIf="createOrEdit" [createOrEdit]="createOrEdit" [apartmentToEdit]="apartmentToEdit" (createOrEditChange)="finishedAddingOrCreate()"></add-apartment>
+<add-apartment *ngIf="createOrEdit" [createOrEdit]="createOrEdit" (showAddApartmentChange)="showApartments.emit(false)" [apartmentToEdit]="apartmentToEdit" (createOrEditChange)="finishedAddingOrCreate()"></add-apartment>
