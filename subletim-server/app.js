@@ -4,15 +4,20 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
+const createCountMinSketch = require('count-min-sketch');
+
 const indexRouter = require('./src/routes/index');
 const subletRouter = require('./src/routes/subletRoute');
 const apartmentRouter = require('./src/routes/apartmentRoute');
 const userRouter = require('./src/routes/userRoute');
+const cmsRouter = require('./src/routes/cmsRoute');
 const scrapingModule = require('./src/modules/ScrapingModule');
 const scraping = new scrapingModule();
 
 const app = express();
 const cors = require('cors');
+
+global.cms =  createCountMinSketch();
 
 app.use(cors());
 
@@ -31,7 +36,7 @@ app.use('/', indexRouter);
 app.use('/subletRoute', subletRouter);
 app.use('/apartmentRoute', apartmentRouter);
 app.use('/userRoute', userRouter);
-
+app.use('/cmsRoute', cmsRouter);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
     next(createError(404));

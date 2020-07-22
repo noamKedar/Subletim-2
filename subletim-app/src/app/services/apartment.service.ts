@@ -6,6 +6,7 @@ import {HttpParams} from "@angular/common/http";
 @Injectable({
   providedIn: 'root',
 })
+
 export class ApartmentService{
   constructor(private http:Http){
     console.log('Apartment Service Initialized...');
@@ -17,8 +18,7 @@ export class ApartmentService{
   }
 
   getUserApartments(user){
-    console.log('service:' + user);
-    var config = {params: {user:user}};
+    var config = {params: {user:user}}
     return this.http.get('apartmentRoute/userApartments', config)
       .map(res => res.json());
   }
@@ -27,7 +27,9 @@ export class ApartmentService{
     var headers = new Headers();
     headers.append('Content-Type', 'application/json');
     return this.http.post('/apartmentRoute/apartment', JSON.stringify(newApartment), {headers: headers})
-      .map(res => res.json());
+      .map(res =>{
+        console.log(res)
+        return res.json()});
   }
 
   deleteApartment(id){
@@ -47,7 +49,7 @@ export class ApartmentService{
   }
   searchApartment(city, address, rooms, currentUser, isAdmin){
     let config = {params: {city:city, address:address, rooms:rooms, currentUser:currentUser}}
-    if(isAdmin) {
+    if(isAdmin === true) {
       return this.http.get('apartmentRoute/searchApartments', config)
         .map(res => res.json());
     }

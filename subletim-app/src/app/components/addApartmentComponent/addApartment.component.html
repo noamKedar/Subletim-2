@@ -19,7 +19,7 @@
   </div>
   <button type="submit" (submit)="addOrUpdateApartment($event)" class="btn btn-success button" [disabled]="!valid()">Submit</button>
   <br>
-  <div *ngIf="UnvalidApartmentName">Apartment with this name is already exists</div>
+  <div *ngIf="validateResult()">Apartment with this name is already exists</div>
   <br>
   <div>
     <img src="../../../assets/home.svg" (click)="returnToMainPage()" class="home-icon">

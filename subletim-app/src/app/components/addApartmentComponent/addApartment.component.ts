@@ -19,13 +19,13 @@ export class addApartmentComponent {
   roomNumber: number;
   currentUser: User;
 
-  @Input() UnvalidApartmentName;
   @Input() apartmentToEdit;
   @Output() apartmentToEditChange = new EventEmitter<boolean>();
   @Input() createOrEdit;
   @Output() createOrEditChange = new EventEmitter<boolean>();
   @Output() showAddApartmentChange = new EventEmitter<boolean>();
   isAddApartment: boolean = false;
+  private res: any;
   constructor(private apartmentService:ApartmentService,
     private authenticationService: AuthenticationService) {
     this.currentUser = this.authenticationService.currentUserValue;
@@ -49,30 +49,39 @@ export class addApartmentComponent {
 
   async addOrUpdateApartment(event) {
     event.preventDefault();
-    if (this.apartmentToEdit) {
-      await this.updateApartment();
-    } else {
+    if (!this.apartmentToEdit) {
       await this.addApartment();
-    }
-    this.apartmentToEditChange.emit(null);
-    this.createOrEditChange.emit(false);
-
+  }
+  else {
+      await this.updateApartment();
+      this.apartmentToEditChange.emit(null);
+      this.createOrEditChange.emit(false);
+  }
   }
 
-  async addApartment(){
-    const newApartment = {
+ async addApartment(){
+    var newApartment = {
       apartmentName: (<HTMLInputElement>document.getElementById("nameInp")).value,
       address: (<HTMLInputElement>document.getElementById("addressInp")).value,
       city: (<HTMLInputElement>document.getElementById("cityInp")).value,
       roomNumber: parseInt((<HTMLInputElement>document.getElementById("roomInp")).value),
       owner: this.currentUser._id
     };
-    await this.apartmentService.addApartment(newApartment).subscribe();
+    await this.apartmentService.addApartment(newApartment).subscribe(
+      res =>{
+        this.res = res
+        if ( this.res && !this.validateResult()){
+          this.apartmentToEditChange.emit(null);
+          this.createOrEditChange.emit(false);
+          this.returnToMainPage();}
+      }
+    );
+
   }
 
   async updateApartment() {
 
-    const _apartment ={
+    var _apartment ={
       _id: this.apartmentToEdit._id,
       apartmentName: (<HTMLInputElement>document.getElementById("nameInp")).value,
       address: (<HTMLInputElement>document.getElementById("addressInp")).value,
@@ -95,5 +104,10 @@ export class addApartmentComponent {
 
   returnToMainPage() {
     this.showAddApartmentChange.emit(false);
+   // this.viewApartments = !this.viewApartments
+  }
+
+  validateResult() {
+    return this.res === "Apartment already exists";
   }
 }

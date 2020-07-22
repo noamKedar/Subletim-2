@@ -17,6 +17,8 @@ import {MainPageComponent} from "./components/mainPageComponent/mainPage.compone
 import {GraphsDirective} from "./components/graphsComponent/graphs.directive";
 import {UpdateUserComponent} from "./components/updateUserComponent/updateUser.component";
 import {ViewSubletComponent} from "./components/viewSubletComponent/viewSublet.component";
+import { StatisticsComponent } from './statistics/statistics.component';
+import {customPipe} from "./statistics/MyCustomPipe";
 import {GoogleMapsModule} from "@angular/google-maps";
 
 @NgModule({
@@ -35,7 +37,9 @@ import {GoogleMapsModule} from "@angular/google-maps";
     MainPageComponent,
     GraphsDirective,
     UpdateUserComponent,
-    ViewSubletComponent
+    ViewSubletComponent,
+    StatisticsComponent,
+    customPipe
   ],
   imports: [
     BrowserModule,
