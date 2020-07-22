@@ -1,16 +1,13 @@
-import {Component} from "@angular/core";
+import {Component, Directive, ElementRef} from "@angular/core";
 import {SubletService} from "../../services/sublet.service";
 import * as d3 from 'd3';
 import {ApartmentService} from "../../services/apartment.service";
 
-@Component({
-  selector: 'graphs',
-  templateUrl: './graphs.component.html',
-  providers: [SubletService],
-  styleUrls: []
+@Directive({
+  selector: '[graphDirective]'
 })
 
-export class GraphsComponent {
+export class GraphsDirective {
   data = {};
   dataArray: { city: string, sublets: number }[] = [];
   secondGraphData = {};
@@ -23,9 +20,9 @@ export class GraphsComponent {
   // append the svg object to the body of the page
   svg;
 
-  constructor(private subletService: SubletService, private apartmentService: ApartmentService) {
+  constructor(elmRef: ElementRef, private subletService: SubletService, private apartmentService: ApartmentService) {
     this.subletService.groupBySublet().subscribe(data => {
-      const subletsDict = {}
+      const subletsDict = {};
       data.forEach(sublet => {
         subletsDict[sublet._id] = sublet;
       });
@@ -75,7 +72,7 @@ export class GraphsComponent {
         .attr("height", function (d) {
           return self.height - y(d.sublets);
         })
-        .attr("fill", "#9de9de")
+        .attr("fill", "#9de9de");
 //add x-axis label
       this.svg.append("text")
         .attr("transform", "translate(" + (this.width / 2) + " ," + (this.height + this.margin.bottom - 15) + ")")
@@ -98,7 +95,7 @@ export class GraphsComponent {
         .style("font-size", "16px")
         .style("text-decoration", "underline")
         .text("Amount Of Sublets Per City");
-    })
+    });
 
     this.apartmentService.mapReduce().subscribe(data => {
       for (let i = 0; i < data.length; i++) {
@@ -151,7 +148,7 @@ export class GraphsComponent {
         .attr("y2", function (d) {
           return y2(d.numOfRooms);
         })
-        .attr("stroke", "black")
+        .attr("stroke", "black");
       // Circles
       svg2.selectAll("mycircle")
         .data(this.secondGraphDataArray)
@@ -165,7 +162,7 @@ export class GraphsComponent {
         })
         .attr("r", "6")
         .style("fill", "#9de9de")
-        .attr("stroke", "black")
+        .attr("stroke", "black");
       //add y-axis label
       svg2.append("text")
         .attr("transform", "rotate(-90)")
