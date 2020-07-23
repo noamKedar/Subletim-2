@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const mongojs = require('mongojs');
 const db = mongojs('subletimDB', ['subletimCollection']); //local mongo installation, DB is mydb
-
+ObjectID = require('mongodb').ObjectID;
 // Get All Subletim
 router.get('/sublets', function(req, res, next) {
     db.subletimCollection.find(function(err, sublets){
@@ -34,6 +34,7 @@ router.post('/sublet', function(req, res, next) {
             "error": "Bad Data"
         });
     } else {
+        sublet.apartment = new ObjectID(sublet.apartment);
         db.subletimCollection.save(sublet, function(err, sublet){
             if(err){
                 res.send(err);
@@ -56,6 +57,7 @@ router.put('/sublet/:id', function(req, res, next) {
     const sublet = req.body;
     sublet.startDate = new Date(sublet.startDate);
     sublet.endDate = new Date(sublet.endDate);
+    sublet.apartment = new ObjectID(sublet.apartment);
     if (!sublet){
         res.status(400);
         res.json({
@@ -91,6 +93,7 @@ router.get('/groupBySublet', function(req, res){
             if(err){
                 res.send(err);
             }
+            console.log(groups)
             res.json(groups);
         });});
 
