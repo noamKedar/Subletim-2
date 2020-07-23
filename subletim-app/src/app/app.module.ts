@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
+import { SocketIoModule, SocketIoConfig} from 'ngx-socket-io';
 import { AppComponent } from './app.component';
 import {SubletsComponent} from "./components/subletComponent/sublet.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
@@ -21,6 +21,8 @@ import { StatisticsComponent } from './statistics/statistics.component';
 import {customPipe} from "./statistics/MyCustomPipe";
 import {GoogleMapsModule} from "@angular/google-maps";
 
+const config: SocketIoConfig = { url: 'http://localhost:4444', options: {} };
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -39,7 +41,7 @@ import {GoogleMapsModule} from "@angular/google-maps";
     UpdateUserComponent,
     ViewSubletComponent,
     StatisticsComponent,
-    customPipe
+    customPipe,
   ],
   imports: [
     BrowserModule,
@@ -47,7 +49,10 @@ import {GoogleMapsModule} from "@angular/google-maps";
     HttpClientModule,
     HttpModule,
     ReactiveFormsModule,
-    GoogleMapsModule
+    GoogleMapsModule,
+    BrowserModule,
+    FormsModule,
+    SocketIoModule.forRoot(config)
   ],
   providers: [],
   bootstrap: [AppComponent]

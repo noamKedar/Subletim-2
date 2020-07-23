@@ -3,6 +3,7 @@ import {SubletService} from "../../services/sublet.service";
 import {User} from "../user/user";
 import {AuthenticationService} from "../../services/authentication.service";
 import {ApartmentService} from "../../services/apartment.service";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'main-page',
@@ -21,6 +22,7 @@ export class MainPageComponent {
   currentUser: User;
   viewApartments: boolean = false;
   showStat: boolean = false;
+  usersCount: number = 0;
   @Output() showLoginChange = new EventEmitter<boolean>();
 
   constructor(private authenticationService: AuthenticationService,
@@ -28,6 +30,10 @@ export class MainPageComponent {
               private apartmentService: ApartmentService) {
     this.currentUser = this.authenticationService.currentUserValue;
 
+  }
+
+  ngOnInit() {
+    this.authenticationService.usersCount.subscribe(count => this.usersCount = count);
   }
 
   toggleAddSublet() {

@@ -4,13 +4,15 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import {User} from "../components/user/user";
 import {Headers} from "@angular/http";
+import { Socket } from "ngx-socket-io";
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
   public currentUserSubject: BehaviorSubject<User>;
   public currentUser: Observable<User>;
+  usersCount = this.socket.fromEvent<number>('usersCount');
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private socket: Socket) {
     this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
     this.currentUser = this.currentUserSubject.asObservable();
   }
@@ -24,6 +26,7 @@ export class AuthenticationService {
       .pipe(map(user => {
         localStorage.setItem('currentUser', JSON.stringify(user));
         this.currentUserSubject.next(user);
+        this.socket.emit('newUser', {user: user});
         return user;
       }));
   }
@@ -49,5 +52,9 @@ export class AuthenticationService {
         this.currentUserSubject.next(res);
         return res
       });
+  }
+
+  updateUsersByAdmin(usersCount) {
+    this.socket.emit("usersUpdateByAdmin", usersCount);
   }
 }

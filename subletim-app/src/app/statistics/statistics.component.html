@@ -2,6 +2,12 @@
 
 <div class="title">Statistics</div>
 <p>{{apartmentStat | customPipe}} </p>
+<p>Currently Logged in users: {{ usersCount }}</p>
+<div class="form-group">
+  <label for="count">Update logged in users count:</label>
+  <input id="count" [(ngModel)]="usersCount" name="count" class="form-control" placeholder="Enter New Value">
+  <button (click)="updateUserCount()" class="btn btn-success button" >Update</button>
+</div>
 <div>
   <img src="../../../assets/home.svg" (click)="returnToMainPage()" class="home-icon">
 </div>

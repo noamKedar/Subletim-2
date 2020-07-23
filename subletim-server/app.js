@@ -15,6 +15,8 @@ const scrapingModule = require('./src/modules/ScrapingModule');
 const scraping = new scrapingModule();
 
 const app = express();
+const http = require('http').createServer(app);
+const io = require('socket.io').listen(http);
 const cors = require('cors');
 
 global.cms =  createCountMinSketch();
@@ -53,9 +55,26 @@ app.use(function(err, req, res, next) {
     res.json({ error: err });
 });
 
-
 app.listen(4200, function () {
     console.log('App listening on port 4200!');
 });
 
-//scraping.scrapeBooking();
+let usersNumber = 0;
+
+io.on("connection", socket => {
+    socket.on("newUser", user => {
+        usersNumber += 1;
+        io.emit("usersCount", usersNumber);
+        socket.emit("usersCount", usersNumber);
+    });
+
+    socket.on("usersUpdateByAdmin", usersCount => {
+        usersNumber = usersCount;
+        io.emit("usersCount", usersNumber);
+        socket.emit("usersCount", usersNumber);
+    });
+});
+
+http.listen(4444);
+
+scraping.scrapeBooking();

@@ -34,5 +34,5 @@
 <login *ngIf="logoutUser" (showLoginChange)="logoutUser = !logoutUser"></login>
 <user *ngIf="users" (showUserChange)="users = !users"></user>
 <update-user *ngIf="editUser" (showEditUserChange)="editUser = !editUser"></update-user>
-<app-statistics *ngIf="showStat" (showStats)="showStat = !showStat"></app-statistics>
+<app-statistics *ngIf="showStat" [usersCount]="usersCount" (showStats)="showStat = !showStat"></app-statistics>
 <apartment *ngIf="viewApartments" (showApartments)="viewApartments = !viewApartments"></apartment>
