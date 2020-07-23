@@ -1,6 +1,5 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {SubletService} from "../../services/sublet.service";
-import {Sublet} from "../subletComponent/sublet";
 import {Apartment} from "../apartmentComponent/apartment";
 import {ApartmentService} from "../../services/apartment.service";
 import {AuthenticationService} from "../../services/authentication.service";
@@ -26,6 +25,8 @@ export class AddSubletComponent {
   @Output() createOrEditChange = new EventEmitter<boolean>();
   @Output() showAddSubletChange = new EventEmitter<boolean>();
   isAddSublet: boolean = false;
+  minDate: Date = new Date (2020, 1, 1);
+  maxDate: Date = new Date (2025, 12, 31);
 
   constructor(private subletService: SubletService, private apartmentService: ApartmentService, private authenticationService: AuthenticationService) {
 
@@ -68,7 +69,9 @@ export class AddSubletComponent {
     }
     this.subletToEditChange.emit(null);
     this.createOrEditChange.emit(false);
-    this.returnToMainPage();
+    if (this.createOrEditChange.observers.length === 0) {
+      this.returnToMainPage();
+    }
   }
 
   addSublet() {
@@ -103,7 +106,7 @@ export class AddSubletComponent {
   }
 
   valid() {
-    return (this.subletName && this.startDate && this.endDate && this.price && this.apartment);
+    return (this.subletName && this.startDate && this.endDate && this.price && this.apartment && this.endDate > this.startDate);
   }
 
   updateStartDate(event) {
@@ -116,5 +119,14 @@ export class AddSubletComponent {
 
   returnToMainPage() {
     this.showAddSubletChange.emit(false);
+  }
+
+  isEndDateValid() {
+    return (this.startDate && this.endDate && this.endDate > this.startDate);
+  }
+
+  back() {
+    this.subletToEditChange.emit(null);
+    this.createOrEditChange.emit(false);
   }
 }

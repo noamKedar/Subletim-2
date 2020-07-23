@@ -26,15 +26,6 @@
   margin-bottom: 10px;
 }
 
-.back-icon {
-  cursor: pointer;
-  width: 32px;
-  margin: 2px;
-  bottom: 3%;
-  left: 6%;
-  position: absolute;
-}
-
 .container-maps {
   display: inline-block;
   width: 50%;

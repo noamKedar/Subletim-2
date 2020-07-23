@@ -14,7 +14,7 @@ import {LoginComponent} from "./components/login/login.component";
 import {RegisterComponent} from "./components/register/register.component";
 import {addApartmentComponent} from "./components/addApartmentComponent/addApartment.component";
 import {MainPageComponent} from "./components/mainPageComponent/mainPage.component";
-import {GraphsDirective} from "./components/graphsComponent/graphs.directive";
+import {GraphsDirective} from "./components/graphsDirective/graphs.directive";
 import {UpdateUserComponent} from "./components/updateUserComponent/updateUser.component";
 import {ViewSubletComponent} from "./components/viewSubletComponent/viewSublet.component";
 import { StatisticsComponent } from './statistics/statistics.component';

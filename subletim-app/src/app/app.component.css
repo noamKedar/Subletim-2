@@ -12,14 +12,13 @@
 }
 
 .form-group {
-
 }
 
 .form-control {
   display: block;
   width: 20%;
   height: 30px;
-  margin: 10px 10px 10px 0;
+  margin: 15px 10px 15px 0;
   border: 2px solid #777777;
   border-radius: 6px;
   resize: none;
@@ -52,7 +51,7 @@
   height: 40px;
 }
 
-.button:hover {
+.button:active:hover {
   border-color: lightblue;
   color: lightblue !important;
 }
@@ -111,4 +110,13 @@ table th {
   left: 2%;
   position: absolute;
   cursor: pointer;
+}
+
+.back-icon {
+  cursor: pointer;
+  width: 32px;
+  margin: 2px;
+  bottom: 3%;
+  left: 6%;
+  position: absolute;
 }

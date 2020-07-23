@@ -7,11 +7,12 @@
   </div>
   <div class="form-group">
     <label for="startDate" class="input-title">START DATE</label>
-    <input id="startDate" type="date" (ngModelChange)="updateStartDate($event)" [ngModel]="startDate | date:'yyyy-MM-dd'" name="startDate" class="form-control" placeholder="Enter Start Date">
+    <input id="startDate" type="date" [min]="minDate" [max]="maxDate" (ngModelChange)="updateStartDate($event)" [ngModel]="startDate | date:'yyyy-MM-dd'" name="startDate" class="form-control" placeholder="Enter Start Date">
   </div>
   <div class="form-group">
     <label for="endDate" class="input-title">END DATE</label>
-    <input id="endDate" type="date" (ngModelChange)="updateEndDate($event)" [ngModel]="endDate | date:'yyyy-MM-dd'" name="endDate" class="form-control" placeholder="Enter End Date">
+    <input id="endDate" type="date" [min]="minDate" [max]="maxDate" (ngModelChange)="updateEndDate($event)" [ngModel]="endDate | date:'yyyy-MM-dd'" name="endDate" class="form-control" placeholder="Enter End Date">
+    <div *ngIf="!isEndDateValid()" class="error">End Date should be after start date</div>
   </div>
   <div class="form-group">
     <label for="price" class="input-title">PRICE</label>
@@ -20,7 +21,7 @@
   <div class="form-group">
     <label for="apartment" class="input-title">APARTMENT</label>
     <br>
-    <select id="apartment" placeholder="Select Apartment" [(ngModel)]="apartment" name="apartment" size="{{apartments.length}}">
+    <select id="apartment" class="select-apartment" placeholder="Select Apartment" [(ngModel)]="apartment" name="apartment" size="{{(apartments || []).length}}">
       <option *ngFor="let apartment of apartments" [ngValue]="apartment">{{apartment.apartmentName}}</option>
     </select>
   </div>
@@ -30,3 +31,6 @@
 <div>
   <img src="../../../assets/home.svg" (click)="returnToMainPage()" class="home-icon">
 </div>
+
+
+<img *ngIf="createOrEditChange.observers.length !== 0" src="../../../assets/back.svg" (click)="back()" class="back-icon">
